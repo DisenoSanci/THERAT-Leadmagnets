@@ -25,61 +25,13 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      height: 100%;
+    body {
       background: var(--bg); color: var(--text);
       font-family: var(--font); -webkit-font-smoothing: antialiased;
-      overflow: hidden;
     }
     button { background: none; border: none; cursor: pointer; font-family: var(--font); color: inherit; -webkit-tap-highlight-color: transparent; }
     img { display: block; }
-
-    #app { position: fixed; inset: 0; overflow: hidden; }
-    .screen { display: none; width: 100%; height: 100%; }
-    .screen.active { display: block; }
-
-    /* ══ HOME ══ */
-    #home { overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
-
-    .home-head {
-      padding: 56px 24px 28px;
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-    }
-    .home-logo { height: 36px; width: auto; margin-bottom: 22px; display: block; }
-    .home-title {
-      font-size: clamp(38px, 10.5vw, 56px); font-weight: 800;
-      letter-spacing: -0.02em; line-height: 1; text-transform: uppercase;
-    }
-    .home-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
-
-    .cards { padding: 12px 16px 80px; display: flex; flex-direction: column; gap: 10px; }
-
-    .card {
-      position: relative; overflow: hidden; border-radius: 10px;
-      height: clamp(220px, 34vw, 290px);
-      cursor: pointer; -webkit-tap-highlight-color: transparent;
-      background: var(--surf);
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .card:active { transform: scale(0.985); opacity: 0.9; }
-    .card-photo {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      filter: brightness(0.42) saturate(0.6);
-      transition: transform 0.35s ease;
-    }
-    .card:active .card-photo { transform: scale(1.025); }
-    .card-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.95) 14%, transparent 62%);
-      padding: 22px;
-      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
-    }
-    .card-chip { margin-bottom: 9px; }
-    .card-name {
-      font-size: clamp(26px, 7.5vw, 36px); font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.95;
-    }
+    a { color: inherit; text-decoration: none; }
 
     /* ══ CHIP ══ */
     .chip {
@@ -91,66 +43,149 @@
     .chip.honey  { color: var(--honey);  border: 1px solid rgba(224,171,67,0.55); background: rgba(224,171,67,0.1); }
     .chip.dual   { color: var(--text);   border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
 
-    /* ══ DETAIL ══ */
-    #detail { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
+    /* ════════════════════════════
+       MOBILE  (< 1024px)
+    ════════════════════════════ */
+    @media (max-width: 1023px) {
+      html, body { height: 100%; overflow: hidden; }
+      #app { position: fixed; inset: 0; overflow: hidden; }
+      .screen { display: none; width: 100%; height: 100%; }
+      .screen.active { display: block; }
 
-    .hero-img {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100vh;
-      object-fit: cover; filter: brightness(0.48) saturate(0.65);
-      z-index: 0; pointer-events: none;
-    }
-    .hero-grad {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-      background: linear-gradient(to top, rgba(20,20,20,0.97) 0%, rgba(12,12,12,0.45) 35%, rgba(0,0,0,0.1) 65%, transparent 82%);
-      z-index: 1; pointer-events: none;
+      /* HOME */
+      #home { overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
+      .home-head { padding: 56px 24px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+      .home-logo { height: 36px; width: auto; margin-bottom: 22px; }
+      .home-title { font-size: clamp(38px, 10.5vw, 56px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; text-transform: uppercase; }
+      .home-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+      .cards { padding: 12px 16px 80px; display: flex; flex-direction: column; gap: 10px; }
+      .card { position: relative; overflow: hidden; border-radius: 10px; height: clamp(220px, 34vw, 290px); cursor: pointer; background: var(--surf); transition: transform 0.15s ease; }
+      .card:active { transform: scale(0.985); opacity: 0.9; }
+      .card-name { font-size: clamp(26px, 7.5vw, 36px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.95; }
+
+      /* DETAIL mobile */
+      #detail { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
+      .hero-img { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; object-fit: cover; filter: brightness(0.48) saturate(0.65); z-index: 0; pointer-events: none; }
+      .hero-grad { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(to top, rgba(20,20,20,0.97) 0%, rgba(12,12,12,0.45) 35%, rgba(0,0,0,0.1) 65%, transparent 82%); z-index: 1; pointer-events: none; }
+      .back { position: fixed; top: 0; left: 0; width: 100%; padding: 48px 24px 24px; background: linear-gradient(to bottom, rgba(0,0,0,0.62) 38%, transparent); display: flex; align-items: center; gap: 10px; z-index: 30; cursor: pointer; }
+      .back-arrow { font-size: 18px; color: rgba(255,255,255,0.48); }
+      .back-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+      .hero-text { position: fixed; bottom: max(calc(44vh + 16px), calc(100vh - 488px + 16px)); left: 0; width: 100%; padding: 0 28px; z-index: 5; pointer-events: none; }
+      .hero-chip { margin-bottom: 11px; }
+      .hero-name { font-size: clamp(36px, 10.5vw, 52px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.94; }
+      .hero-spacer { height: 56vh; max-height: 488px; flex-shrink: 0; position: relative; z-index: 2; }
+      .recipe-card { position: relative; z-index: 10; background: var(--card); border-radius: 24px 24px 0 0; min-height: 100vh; padding-bottom: 96px; box-shadow: 0 -32px 64px rgba(0,0,0,0.6); }
+      .rc-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line); margin: 14px auto 0; }
+
+      /* Desktop-only elements hidden on mobile */
+      .dt-left, #dt-home-hero { display: none !important; }
     }
 
-    .back {
-      position: fixed; top: 0; left: 0;
-      width: 100%; padding: 48px 24px 24px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.62) 38%, transparent);
-      display: flex; align-items: center; gap: 10px;
-      z-index: 30; cursor: pointer;
-    }
-    .back-arrow { font-size: 18px; color: rgba(255,255,255,0.48); }
-    .back-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+    /* ════════════════════════════
+       DESKTOP  (≥ 1024px)
+    ════════════════════════════ */
+    @media (min-width: 1024px) {
+      #app { display: block; }
+      .screen { display: none; }
+      .screen.active { display: block; }
 
-    .hero-text {
-      position: fixed;
-      bottom: max(calc(44vh + 16px), calc(100vh - 488px + 16px));
-      left: 0; width: 100%; padding: 0 28px;
-      z-index: 5; pointer-events: none;
-    }
-    .hero-chip { margin-bottom: 11px; }
-    .hero-name {
-      font-size: clamp(36px, 10.5vw, 52px); font-weight: 800;
-      text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.94;
+      /* Mobile-only elements hidden on desktop */
+      .hero-img, .hero-grad, .back, .hero-text, .hero-spacer, .rc-handle { display: none !important; }
+
+      /* HOME desktop */
+      #home { background: var(--bg); min-height: 100vh; }
+
+      #dt-home-hero {
+        position: relative; height: 56vh; min-height: 440px;
+        display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        overflow: hidden; padding: 0 80px 64px;
+        text-align: center;
+      }
+      .dt-home-bg {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: center 30%;
+        filter: brightness(0.38) saturate(0.6);
+      }
+      .dt-home-veil {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.3) 50%, transparent 100%);
+      }
+      .dt-home-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+      .dt-home-logo { height: 44px; width: auto; margin-bottom: 28px; }
+      .dt-home-title { font-size: clamp(72px, 9vw, 118px); font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; text-transform: uppercase; }
+      .dt-home-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted); margin-top: 16px; }
+
+      .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 40px 80px 100px; }
+      .card {
+        position: relative; overflow: hidden; border-radius: 14px;
+        height: clamp(360px, 42vh, 560px); cursor: pointer; background: var(--surf);
+        transition: transform 0.2s ease;
+      }
+      .card:hover { transform: translateY(-5px); }
+      .card-name { font-size: clamp(28px, 2.8vw, 40px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.95; }
+
+      /* DETAIL desktop */
+      #detail { display: none; }
+      #detail.active { display: flex; min-height: 100vh; align-items: flex-start; }
+
+      .dt-left {
+        position: sticky; top: 0;
+        width: 50%; height: 100vh;
+        flex-shrink: 0; overflow: hidden;
+      }
+      .dt-left-img {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: center;
+        filter: brightness(0.48) saturate(0.65);
+      }
+      .dt-left-veil {
+        position: absolute; inset: 0;
+        background: linear-gradient(to right, transparent 50%, var(--bg) 100%);
+        pointer-events: none;
+      }
+      .dt-back {
+        position: absolute; top: 48px; left: 52px;
+        display: flex; align-items: center; gap: 10px; z-index: 10;
+      }
+      .dt-back-arrow { font-size: 16px; color: rgba(255,255,255,0.45); }
+      .dt-back-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+      .dt-back:hover .dt-back-label, .dt-back:hover .dt-back-arrow { color: rgba(255,255,255,0.72); }
+      .dt-left-text { position: absolute; bottom: 72px; left: 56px; right: 48px; z-index: 5; }
+      .dt-left-chip { margin-bottom: 14px; }
+      .dt-left-name { font-size: clamp(44px, 4.5vw, 68px); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; line-height: 0.93; }
+
+      .recipe-card { flex: 1; background: var(--card); border-radius: 0; min-height: 100vh; padding-bottom: 120px; }
     }
 
-    .hero-spacer { height: 56vh; max-height: 488px; flex-shrink: 0; position: relative; z-index: 2; }
-
-    .recipe-card {
-      position: relative; z-index: 10;
-      background: var(--card); border-radius: 24px 24px 0 0;
-      min-height: 100vh; padding-bottom: 96px;
-      box-shadow: 0 -32px 64px rgba(0,0,0,0.6);
+    /* ════════════════════════════
+       SHARED — cards + recipe
+    ════════════════════════════ */
+    .card-photo {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: brightness(0.42) saturate(0.6);
+      transition: transform 0.35s ease;
     }
-    .rc-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line); margin: 14px auto 0; }
-    .rc-header { padding: 24px 24px 20px; border-bottom: 1px solid var(--line); }
-    .rc-desc { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.76; text-wrap: pretty; }
-
-    /* Stats */
-    .stats {
-      display: flex; margin: 24px 24px 0;
-      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    .card:hover .card-photo { transform: scale(1.04); }
+    .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 14%, transparent 62%);
+      padding: 28px;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
     }
-    .stat { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid var(--line); }
+    .card-chip { margin-bottom: 9px; }
+
+    /* Recipe card interior */
+    .rc-header { padding: 32px 32px 24px; border-bottom: 1px solid var(--line); }
+    .rc-desc { font-size: 16px; font-weight: 400; color: var(--body); line-height: 1.76; text-wrap: pretty; }
+
+    .stats { display: flex; margin: 28px 32px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .stat { flex: 1; padding: 16px 12px; text-align: center; border-right: 1px solid var(--line); }
     .stat:last-child { border-right: none; }
     .stat-val { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
     .stat-key { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
 
-    .section { padding: 32px 24px 0; }
+    .section { padding: 36px 32px 0; }
     .sec-label {
       display: flex; align-items: center; gap: 14px;
       font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
@@ -158,74 +193,41 @@
     }
     .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
-    /* Flavor pills */
     .fpills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .fpill {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 6px 14px; border: 1px solid var(--line); border-radius: 100px; color: var(--label);
-    }
+    .fpill { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--line); border-radius: 100px; color: var(--label); }
 
-    /* Ingredients */
     .prop-list { border-top: 1px solid var(--line); }
     .prop-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
     .prop-row:last-child { border-bottom: none; }
-    .prop-img {
-      width: 42px; height: 42px; border-radius: 50%;
-      background: var(--surf); border: 1px solid var(--line);
-      overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-    }
+    .prop-img { width: 44px; height: 44px; border-radius: 50%; background: var(--surf); border: 1px solid var(--line); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
     .prop-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
     .prop-fallback { font-size: 13px; font-weight: 800; color: var(--muted); }
-    .prop-amt { font-size: 16px; font-weight: 700; color: var(--text); min-width: 62px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .prop-amt { font-size: 16px; font-weight: 700; color: var(--text); min-width: 64px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
     .prop-ing { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.4; }
 
-    /* Steps */
     .steps-list { border-top: 1px solid var(--line); }
     .step { display: grid; grid-template-columns: 32px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
     .step:last-child { border-bottom: none; }
-    .step-n {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--text); color: var(--bg);
-      font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
-    }
+    .step-n { width: 28px; height: 28px; border-radius: 50%; background: var(--text); color: var(--bg); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
     .step-txt { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.72; text-wrap: pretty; }
 
-    /* Warning */
-    .raw-egg-warn {
-      margin: 28px 24px 0;
-      padding: 14px 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      background: rgba(255,255,255,0.03);
-      font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.65;
-    }
+    .bar-tip { margin: 28px 32px 0; padding: 18px 20px 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--surf); }
+    .bar-tip-label { font-size: 9px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .bar-tip-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px; letter-spacing: -0.01em; }
+    .bar-tip-steps { display: flex; flex-direction: column; gap: 7px; }
+    .bar-tip-step { display: flex; gap: 10px; align-items: baseline; font-size: 13px; font-weight: 400; color: var(--body); line-height: 1.55; }
+    .bar-tip-step-n { font-size: 10px; font-weight: 700; color: var(--muted); flex-shrink: 0; width: 14px; text-align: right; }
+
+    .raw-egg-warn { margin: 24px 32px 0; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.03); font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.65; }
     .raw-egg-warn strong { color: var(--label); font-weight: 600; }
 
-    /* Tip de barra */
-    .bar-tip {
-      margin: 28px 24px 0;
-      padding: 18px 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--surf);
-    }
-    .bar-tip-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 8px;
-    }
-    .bar-tip-title {
-      font-size: 13px; font-weight: 700; color: var(--text);
-      margin-bottom: 12px; letter-spacing: -0.01em;
-    }
-    .bar-tip-steps { display: flex; flex-direction: column; gap: 7px; }
-    .bar-tip-step {
-      display: flex; gap: 10px; align-items: baseline;
-      font-size: 13px; font-weight: 400; color: var(--body); line-height: 1.55;
-    }
-    .bar-tip-step-n {
-      font-size: 10px; font-weight: 700; color: var(--muted);
-      flex-shrink: 0; width: 14px; text-align: right;
+    /* Mobile padding override for recipe card internals */
+    @media (max-width: 1023px) {
+      .rc-header { padding: 24px 24px 20px; }
+      .stats { margin: 24px 24px 0; }
+      .section { padding: 32px 24px 0; }
+      .bar-tip { margin: 28px 24px 0; }
+      .raw-egg-warn { margin: 24px 24px 0; }
     }
   </style>
 </head>
@@ -234,16 +236,32 @@
 
   <!-- HOME -->
   <div id="home" class="screen active">
+
+    <!-- Desktop hero header -->
+    <div id="dt-home-hero">
+      <img src="Imagens/Gemini_Generated_Image_bfcq3obfcq3obfcq.jpeg" alt="" class="dt-home-bg">
+      <div class="dt-home-veil"></div>
+      <div class="dt-home-content">
+        <img src="Imagens/Logo.svg" alt="THERAT" class="dt-home-logo">
+        <h1 class="dt-home-title">Recetario</h1>
+        <p class="dt-home-sub">Tres recetas · Tres momentos</p>
+      </div>
+    </div>
+
+    <!-- Mobile header -->
     <header class="home-head">
       <img src="Imagens/Logo.svg" alt="THERAT" class="home-logo">
       <h1 class="home-title">Recetario</h1>
       <p class="home-sub">Tres recetas · Tres momentos</p>
     </header>
+
     <div class="cards" id="js-cards"></div>
   </div>
 
   <!-- DETAIL -->
   <div id="detail" class="screen">
+
+    <!-- MOBILE: fixed hero elements -->
     <img class="hero-img" id="d-img" src="" alt="">
     <div class="hero-grad"></div>
     <button class="back" id="js-back" aria-label="Volver al recetario">
@@ -255,6 +273,22 @@
       <h2 class="hero-name" id="d-name"></h2>
     </div>
     <div class="hero-spacer"></div>
+
+    <!-- DESKTOP: sticky left image panel -->
+    <div class="dt-left">
+      <img class="dt-left-img" id="dt-img" src="" alt="">
+      <div class="dt-left-veil"></div>
+      <button class="dt-back" id="dt-back" aria-label="Volver al recetario">
+        <span class="dt-back-arrow">←</span>
+        <span class="dt-back-label">Recetario</span>
+      </button>
+      <div class="dt-left-text">
+        <div class="dt-left-chip" id="dt-chip"></div>
+        <h2 class="dt-left-name" id="dt-name"></h2>
+      </div>
+    </div>
+
+    <!-- SHARED: recipe content -->
     <div class="recipe-card">
       <div class="rc-handle"></div>
       <div class="rc-header">
@@ -287,14 +321,15 @@
 </div>
 <script>
   /* ── IMÁGENES DE INGREDIENTES ── */
+  const U = 'https://images.unsplash.com/photo-';
   const IMG = {
-    lima:     'https://imgs.search.brave.com/znRUppCj67GxycEsp9DgS2vnSly5ffieyEpV5TW2F5o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5nZXR0eWltYWdlcy5jb20vaWQvMTA2NDkxNzMyL2VzL2ZvdG8vbGltJUMzJUIzbi5qcGc_cz02MTJ4NjEyJnc9MCZrPTIwJmM9V3ZfV0tBOVZudWpHa2xpNHFXamlRR2pvdTlQaFhZY1djTDhCdEtyT2hmdz0',
-    azucar:   'https://imgs.search.brave.com/65oMibwZQg3Puu_3vf9tYaUwrGnjm4U4hAwDmZDaxpE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4wLnVuY29tby5jb20vZXMvcG9zdHMvNi8yLzEvY29tb19oYWNlcl9jYXJhbWVsb19saXF1aWRvX3Npbl9henVjYXJfNTExMjZfcGFzb180XzYwMC5qcGc',
-    kahlua:   'https://imgs.search.brave.com/jovQTDTI9GgSFQ8Ih_w45_oj6Kay0CwSmqVQORpp1c4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90b3N0LmNsL2Nkbi9zaG9wL3Byb2R1Y3RzL0xpY29yLWRlLUNhZmUtS2FobHVhLTc1MGNjLnBuZz92PTE3Mzg3NDQ5OTEmd2lkdGg9MTIxNA',
-    polot:    'https://imgs.search.brave.com/t0J8zhE9gvU52FvZbalvQG45YKJzP9-6pwZNoPY8ePA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9qb3JkaWFuYWxpLmNvbS9jZG4vc2hvcC9hcnRpY2xlcy9tdWVzdHJhaW1nXzMuanBnP3Y9MTY4MzI0OTQzMSZ3aWR0aD0zODQw',
-    espresso: 'https://imgs.search.brave.com/Jj5M6WgA275rLVfxWMBzD-Y1ZYBzXvatuUSgANJMQsw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wZXJmZWN0ZGFpbHlncmluZC5jb20vZXMvd3AtY29udGVudC91cGxvYWRzL3NpdGVzLzIvMjAxOC8wMi9DcmVtYS1kZWwtZXNwcmVzc28uanBn',
-    menta:    'https://thumbs.dreamstime.com/b/menta-fresca-en-una-tabla-52376962.jpg',
-    ginger:   'https://images.unsplash.com/photo-1775638409001-3a90d37a2dd4?q=80&w=200&h=200&fit=crop',
+    lima:     U+'1590502593747-42a996133562?q=80&w=200&h=200&fit=crop',
+    azucar:   U+'1558618666-fcd25c85cd64?q=80&w=200&h=200&fit=crop',
+    kahlua:   U+'1569529465841-dfecdab7503b?q=80&w=200&h=200&fit=crop',
+    polot:    U+'1587135991058-8816b028691f?w=200&h=200&fit=crop&q=80',
+    espresso: U+'1461023058943-07fcbe16d735?w=200&h=200&fit=crop&q=80',
+    menta:    U+'1628556234393-a932693e712c?q=80&w=200&h=200&fit=crop',
+    ginger:   U+'1542990978-c5e3f5d4c78e?q=80&w=200&h=200&fit=crop',
     huevo:    'https://plus.unsplash.com/premium_photo-1668771715526-1fdb452c7ee7?w=200&h=200&fit=crop&q=60',
   };
 
@@ -391,7 +426,7 @@
     }
   ];
 
-  /* ── RENDER HOME ── */
+  /* ── RENDER HOME CARDS ── */
   const cardsEl = document.getElementById('js-cards');
   COCKTAILS.forEach((c, i) => {
     const el = document.createElement('div');
@@ -410,65 +445,91 @@
     cardsEl.appendChild(el);
   });
 
+  /* ── RECIPE HTML FRAGMENTS ── */
+  function recipeInnerHTML(c) {
+    const ings = c.ingredients.map(ing => {
+      const inner = ing.img
+        ? `<img src="${ing.img}" alt="" loading="lazy">`
+        : `<span class="prop-fallback">${ing.name.charAt(0).toUpperCase()}</span>`;
+      return `<div class="prop-row"><div class="prop-img">${inner}</div><span class="prop-amt">${ing.amt}</span><span class="prop-ing">${ing.name}</span></div>`;
+    }).join('');
+
+    const steps = c.steps.map((s, i) =>
+      `<div class="step"><div class="step-n">${i + 1}</div><p class="step-txt">${s}</p></div>`
+    ).join('');
+
+    const tipHtml = c.tip ? `
+      <div class="bar-tip">
+        <p class="bar-tip-label">Básico de barra</p>
+        <p class="bar-tip-title">${c.tip.title}</p>
+        <div class="bar-tip-steps">${c.tip.steps.map((s, i) =>
+          `<div class="bar-tip-step"><span class="bar-tip-step-n">${i+1}.</span><span>${s}</span></div>`).join('')}
+        </div>
+      </div>` : '';
+
+    const warnHtml = c.rawEgg ? `
+      <div class="raw-egg-warn">
+        <strong>Aviso</strong> — Esta receta contiene clara de huevo crudo. Puede sustituirse por clara pasteurizada.
+      </div>` : '';
+
+    return { ings, steps, tipHtml, warnHtml };
+  }
+
   /* ── OPEN DETAIL ── */
   function openDetail(c) {
-    document.getElementById('d-img').src = c.img;
-    document.getElementById('d-img').alt = c.name;
-    document.getElementById('d-chip').innerHTML = `<span class="chip ${c.variant}">${c.variantLabel}</span>`;
-    document.getElementById('d-name').textContent = c.name.toUpperCase();
-    document.getElementById('d-desc').textContent = c.description;
+    const isDesktop = window.innerWidth >= 1024;
+    const { ings, steps, tipHtml, warnHtml } = recipeInnerHTML(c);
 
+    // Shared recipe card content
+    document.getElementById('d-desc').textContent = c.description;
     document.getElementById('d-stats').innerHTML = `
       <div class="stat"><p class="stat-val">${c.time}</p><p class="stat-key">Tiempo</p></div>
       <div class="stat"><p class="stat-val">${c.glass}</p><p class="stat-key">Copa</p></div>
       <div class="stat"><p class="stat-val">${c.ingredients.length}</p><p class="stat-key">Ingredientes</p></div>`;
+    document.getElementById('d-flavors').innerHTML = c.flavors.map(f => `<span class="fpill">${f}</span>`).join('');
+    document.getElementById('d-ingredients').innerHTML = ings;
+    document.getElementById('d-steps').innerHTML = steps;
 
-    document.getElementById('d-flavors').innerHTML =
-      c.flavors.map(f => `<span class="fpill">${f}</span>`).join('');
-
-    document.getElementById('d-ingredients').innerHTML =
-      c.ingredients.map(ing => {
-        const inner = ing.img
-          ? `<img src="${ing.img}" alt="" loading="lazy">`
-          : `<span class="prop-fallback">${ing.name.charAt(0).toUpperCase()}</span>`;
-        return `<div class="prop-row">
-          <div class="prop-img">${inner}</div>
-          <span class="prop-amt">${ing.amt}</span>
-          <span class="prop-ing">${ing.name}</span>
-        </div>`;
-      }).join('');
-
-    document.getElementById('d-steps').innerHTML =
-      c.steps.map((s, i) =>
-        `<div class="step"><div class="step-n">${i + 1}</div><p class="step-txt">${s}</p></div>`
-      ).join('');
-
-    // Tip de almíbar
     const tipEl = document.getElementById('d-tip');
     if (c.tip) {
       document.getElementById('d-tip-title').textContent = c.tip.title;
       document.getElementById('d-tip-steps').innerHTML = c.tip.steps
-        .map((s, i) => `<div class="bar-tip-step"><span class="bar-tip-step-n">${i+1}.</span><span>${s}</span></div>`)
-        .join('');
+        .map((s, i) => `<div class="bar-tip-step"><span class="bar-tip-step-n">${i+1}.</span><span>${s}</span></div>`).join('');
       tipEl.style.display = 'block';
     } else {
       tipEl.style.display = 'none';
     }
+    document.getElementById('d-egg-warn').style.display = c.rawEgg ? 'block' : 'none';
 
-    const warn = document.getElementById('d-egg-warn');
-    warn.style.display = c.rawEgg ? 'block' : 'none';
+    if (isDesktop) {
+      // Desktop: populate left panel
+      document.getElementById('dt-img').src = c.img;
+      document.getElementById('dt-img').alt = c.name;
+      document.getElementById('dt-chip').innerHTML = `<span class="chip ${c.variant}">${c.variantLabel}</span>`;
+      document.getElementById('dt-name').textContent = c.name.toUpperCase();
+      window.scrollTo(0, 0);
+    } else {
+      // Mobile: populate fixed elements
+      document.getElementById('d-img').src = c.img;
+      document.getElementById('d-img').alt = c.name;
+      document.getElementById('d-chip').innerHTML = `<span class="chip ${c.variant}">${c.variantLabel}</span>`;
+      document.getElementById('d-name').textContent = c.name.toUpperCase();
+      const det = document.getElementById('detail');
+      det.scrollTop = 0;
+    }
 
     document.getElementById('home').classList.remove('active');
-    const det = document.getElementById('detail');
-    det.classList.add('active');
-    det.scrollTop = 0;
+    document.getElementById('detail').classList.add('active');
   }
 
   /* ── BACK ── */
-  document.getElementById('js-back').addEventListener('click', () => {
+  function goHome() {
     document.getElementById('detail').classList.remove('active');
     document.getElementById('home').classList.add('active');
-  });
+    if (window.innerWidth >= 1024) window.scrollTo(0, 0);
+  }
+  document.getElementById('js-back').addEventListener('click', goHome);
+  document.getElementById('dt-back').addEventListener('click', goHome);
 </script>
 </body>
 </html>
