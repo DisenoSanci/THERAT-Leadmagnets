@@ -255,6 +255,17 @@
 
 </div>
 <script>
+  /* ── IMÁGENES DE INGREDIENTES ── */
+  const U = 'https://images.unsplash.com/photo-';
+  const IMG = {
+    cafe:    U+'1461023058943-07fcbe16d735?w=200&h=200&fit=crop&q=80',
+    sirope:  U+'1587135991058-8816b028691f?w=200&h=200&fit=crop&q=80',
+    limon:   'https://images.unsplash.com/photo-1590502593747-42a996133562?q=80&w=200&h=200&fit=crop',
+    menta:   'https://thumbs.dreamstime.com/b/menta-fresca-en-una-tabla-52376962.jpg',
+    ginger:  'https://images.unsplash.com/photo-1775638409001-3a90d37a2dd4?q=80&w=200&h=200&fit=crop',
+    huevo:   'https://plus.unsplash.com/premium_photo-1668771715526-1fdb452c7ee7?w=200&h=200&fit=crop&q=60',
+  };
+
   /* ── RECETAS ── */
   const COCKTAILS = [
     {
@@ -270,9 +281,9 @@
       rawEgg: false,
       ingredients: [
         { amt: '5 cl',  name: 'Ratafia Honey THERAT', img: 'Imagens/Honey01.jpg' },
-        { amt: '3 cl',  name: 'Licor de café Kahlúa', img: null },
-        { amt: '2 cl',  name: 'Caramelo salado Polot', img: null },
-        { amt: '1 u',   name: 'Espresso', img: null },
+        { amt: '3 cl',  name: 'Licor de café Kahlúa', img: IMG.cafe },
+        { amt: '2 cl',  name: 'Caramelo salado Polot', img: IMG.sirope },
+        { amt: '1 u',   name: 'Espresso', img: IMG.cafe },
       ],
       steps: [
         'Prepara el espresso y deja que se enfríe unos minutos.',
@@ -294,10 +305,10 @@
       rawEgg: false,
       ingredients: [
         { amt: '5 cl', name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
-        { amt: '3 cl', name: 'Lima natural', img: null },
-        { amt: '2 cl', name: 'Azúcar líquido', img: null },
-        { amt: 'c/n',  name: 'Menta (en el shake)', img: null },
-        { amt: '—',    name: 'Ginger beer (para terminar)', img: null },
+        { amt: '3 cl', name: 'Lima natural',           img: IMG.limon },
+        { amt: '2 cl', name: 'Azúcar líquido',         img: IMG.sirope },
+        { amt: 'c/n',  name: 'Menta (en el shake)',    img: IMG.menta },
+        { amt: '—',    name: 'Ginger beer',            img: IMG.ginger },
       ],
       steps: [
         'Pon la ratafia, la lima, el azúcar y unas hojas de menta en la coctelera con hielo.',
@@ -320,9 +331,9 @@
       ingredients: [
         { amt: '3 cl',   name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
         { amt: '3 cl',   name: 'Ratafia Honey THERAT',  img: 'Imagens/Honey01.jpg' },
-        { amt: '3 cl',   name: 'Lima natural', img: null },
-        { amt: '2 cl',   name: 'Azúcar líquido', img: null },
-        { amt: '1,5 cl', name: 'Clara de huevo', img: null },
+        { amt: '3 cl',   name: 'Lima natural',           img: IMG.limon },
+        { amt: '2 cl',   name: 'Azúcar líquido',         img: IMG.sirope },
+        { amt: '1,5 cl', name: 'Clara de huevo',         img: IMG.huevo },
       ],
       steps: [
         'Dry shake: todos los ingredientes en la coctelera sin hielo. Agita 15 segundos para montar la clara.',
