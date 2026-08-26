@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tres formas de brindar distinto — THERAT</title>
+  <meta name="description" content="Tres recetas muy fáciles para convertir Honey, Orange y Caliu en el mejor plan de la noche. Recetario digital gratuito de THERAT.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bk:      #080808;
+      --s1:      #111111;
+      --s2:      #181818;
+      --line:    rgba(255,255,255,0.1);
+      --w:       #ffffff;
+      --dim:     rgba(255,255,255,0.72);
+      --muted:   rgba(255,255,255,0.42);
+      --orange:  #FF7937;
+      --honey:   #E0AB43;
+      --caliu:   #A32133;
+      --font:    'Montserrat', -apple-system, 'Helvetica Neue', sans-serif;
+      --g:       clamp(20px, 5.5vw, 80px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    body {
+      background: var(--bk);
+      color: var(--w);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+
+    /* ─── LAYOUT ─── */
+    .wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: var(--g); }
+
+    /* ─── LABEL ─── */
+    .lbl {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 2px;
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { opacity: .85; }
+    .btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+    .btn-w  { background: var(--w);      color: var(--bk); padding: 16px 36px; }
+    .btn-w:hover { background: var(--honey); }
+
+    .btn-ol { background: transparent; color: var(--w); padding: 14px 34px; border: 1.5px solid rgba(255,255,255,.28); }
+    .btn-ol:hover { border-color: rgba(255,255,255,.7); }
+
+    .btn-bk { background: var(--bk); color: var(--w); padding: 17px 44px; font-size: 11px; letter-spacing: .2em; }
+    .btn-bk:hover { background: #1a1a1a; }
+    .btn-bk:focus-visible { outline-color: var(--w); }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px var(--g);
+      transition: background .3s ease, border-color .3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .topbar.on {
+      background: rgba(8,8,8,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--line);
+    }
+    .topbar-logo { height: 28px; width: auto; }
+    .topbar .btn-w { padding: 10px 22px; font-size: 10px; }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      filter: brightness(.7);
+    }
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(8,8,8,.08) 0%,
+        rgba(8,8,8,.32) 45%,
+        rgba(8,8,8,.92) 82%,
+        rgba(8,8,8,1)   100%
+      );
+      pointer-events: none;
+    }
+    .hero-body {
+      position: relative;
+      padding: 0 var(--g) clamp(56px, 9vw, 112px);
+      max-width: min(900px, 100%);
+    }
+    .hero-body .lbl { display: block; margin-bottom: 24px; }
+    .hero-h1 {
+      font-size: clamp(34px, 5.2vw, 68px);
+      font-weight: 800;
+      line-height: .97;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      text-wrap: balance;
+      margin-bottom: 28px;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      font-weight: 400;
+      line-height: 1.72;
+      color: var(--dim);
+      max-width: 520px;
+      margin-bottom: 44px;
+      text-wrap: pretty;
+    }
+    .hero-ctas { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero-micro { font-size: 11px; color: var(--muted); letter-spacing: .04em; }
+
+    /* ─── BENEFITS ─── */
+    .benefits {
+      background: var(--s1);
+      padding: clamp(80px, 12vw, 148px) 0;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(48px, 8vw, 104px);
+      align-items: start;
+    }
+    .benefits-left { position: sticky; top: 110px; }
+    .benefits-left .lbl { display: block; margin-bottom: 20px; }
+    .benefits-h2 {
+      font-size: clamp(30px, 3.6vw, 52px);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -.018em;
+      text-transform: uppercase;
+      text-wrap: balance;
+      margin-bottom: 22px;
+    }
+    .benefits-p {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.78;
+      color: var(--dim);
+      text-wrap: pretty;
+      margin-bottom: 44px;
+    }
+    /* Bottle trio */
+    .btrio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; list-style: none; }
+    .btcard { position: relative; overflow: hidden; }
+    .btcard-img-wrap { aspect-ratio: 2/3; overflow: hidden; position: relative; }
+    .btcard-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      filter: brightness(.62) saturate(.75);
+      transition: transform .65s ease, filter .65s ease;
+    }
+    .btcard:hover .btcard-img { transform: scale(1.06); filter: brightness(.82) saturate(.95); }
+    .btcard-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 32%, rgba(8,8,8,.96) 100%);
+      pointer-events: none;
+    }
+    .btcard-body { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(12px, 1.6vw, 20px); }
+    .btbadge {
+      display: inline-block;
+      font-size: 9px; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--c, var(--honey));
+      border-bottom: 1.5px solid var(--c, var(--honey));
+      padding-bottom: 5px; margin-bottom: 9px;
+    }
+    .btcard-name { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--w); margin-bottom: 5px; }
+    .btcard-desc { font-size: 11px; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,.54); text-wrap: pretty; }
+
+    /* Interlude */
+    .interlude { position: relative; height: clamp(220px, 30vw, 420px); overflow: hidden; }
+    .interlude-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 120%;
+      object-fit: cover; object-position: center 35%;
+      filter: brightness(.4) saturate(.55);
+    }
+    .interlude-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,.6) 0%, rgba(8,8,8,.05) 50%, rgba(8,8,8,.6) 100%);
+    }
+
+    @media (max-width: 700px) {
+      .benefits-grid { grid-template-columns: 1fr; gap: 48px; }
+      .benefits-left { position: static; }
+      .btcard-body { padding: 12px; }
+      .btcard-desc { display: none; }
+    }
+
+    /* ─── RECIPES ─── */
+    .recipes { background: var(--bk); padding: clamp(80px, 12vw, 148px) 0 0; }
+    .recipes-head { margin-bottom: clamp(44px, 6vw, 80px); }
+    .recipes-head .lbl { display: block; margin-bottom: 20px; }
+    .recipes-h2 {
+      font-size: clamp(28px, 3.4vw, 48px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.016em;
+      text-transform: uppercase;
+      text-wrap: balance;
+      max-width: 540px;
+      margin-bottom: 16px;
+    }
+    .recipes-intro { font-size: 15px; font-weight: 400; line-height: 1.72; color: var(--dim); max-width: 440px; text-wrap: pretty; }
+
+    /* Full-bleed grid */
+    .rgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+    .rcard { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+    .rcard-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.55) saturate(.8);
+      transition: transform .65s ease, filter .65s ease;
+    }
+    .rcard:hover .rcard-img { transform: scale(1.04); filter: brightness(.65) saturate(.9); }
+    .rcard-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 22%, rgba(8,8,8,.96) 100%);
+      pointer-events: none;
+    }
+    .rcard-body { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(18px, 3vw, 32px); }
+    .rbadge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 1px;
+      margin-bottom: 12px;
+    }
+    .rbadge-honey  { background: rgba(224,171,67,.9);  color: #000; }
+    .rbadge-orange { background: rgba(255,121,55,.9);  color: #000; }
+    .rbadge-caliu  { background: rgba(163,33,51,.92);  color: #fff; }
+    .rcard h3 {
+      text-transform: uppercase;
+      font-size: clamp(18px, 2.1vw, 27px);
+      font-weight: 700;
+      line-height: 1.12;
+      text-wrap: balance;
+      margin-bottom: 11px;
+      letter-spacing: -.01em;
+    }
+    .rcard-txt { font-size: clamp(12px, 1.1vw, 13.5px); font-weight: 400; line-height: 1.68; color: rgba(255,255,255,.65); text-wrap: pretty; margin-bottom: 14px; }
+    .rcard-ft { font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--honey); }
+    .recipes-foot { padding: clamp(44px, 7vw, 88px) 0; text-align: center; }
+    @media (max-width: 700px) {
+      .rgrid { grid-template-columns: 1fr; }
+      .rcard { aspect-ratio: 4/3; }
+    }
+
+    /* ─── PRODUCT VALUE ─── */
+    .pv { background: var(--s1); padding: clamp(80px, 12vw, 148px) 0; overflow: hidden; }
+    .pv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(48px, 8vw, 104px); align-items: center; }
+    .pv-img { aspect-ratio: 4/5; overflow: hidden; }
+    .pv-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: brightness(.8); transition: transform .8s ease; }
+    .pv-img:hover img { transform: scale(1.03); }
+    .pv-text .lbl { display: block; margin-bottom: 20px; }
+    .pv-h2 {
+      text-transform: uppercase;
+      font-size: clamp(26px, 3vw, 46px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.016em;
+      text-wrap: balance;
+      margin-bottom: 22px;
+    }
+    .pv-p { font-size: 15px; font-weight: 400; line-height: 1.8; color: var(--dim); text-wrap: pretty; margin-bottom: 32px; }
+    .callout {
+      border-left: 2px solid var(--honey);
+      padding: 16px 22px;
+      font-size: clamp(16px, 1.8vw, 21px);
+      font-weight: 600;
+      line-height: 1.44;
+      color: var(--w);
+    }
+    @media (max-width: 700px) {
+      .pv-grid { grid-template-columns: 1fr; gap: 44px; }
+      .pv-img { aspect-ratio: 3/2; }
+    }
+
+    /* ─── FORM ─── */
+    .fsec { background: var(--bk); padding: 0; }
+    .fsplit { display: flex; min-height: 100svh; }
+    .fsplit-img {
+      flex: 1; position: sticky; top: 0;
+      height: 100svh; overflow: hidden; flex-shrink: 0;
+    }
+    .fsplit-img img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      filter: brightness(.52) saturate(.62);
+    }
+    .fsplit-img-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 50%, var(--bk) 100%);
+      pointer-events: none;
+    }
+    .fsplit-form {
+      width: min(580px, 52%); flex-shrink: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(56px, 8vw, 100px) clamp(36px, 5.5vw, 72px);
+      background: var(--bk);
+    }
+    .fsplit-form .lbl { display: block; margin-bottom: 20px; }
+    .fc-h2 {
+      text-transform: uppercase;
+      font-size: clamp(26px, 3vw, 46px);
+      font-weight: 800; line-height: 1.06; letter-spacing: -.022em;
+      color: var(--w); text-wrap: balance;
+      margin-bottom: 20px;
+    }
+    .fc-p { font-size: 15px; font-weight: 400; line-height: 1.76; color: var(--dim); text-wrap: pretty; margin-bottom: 32px; }
+    .fbox { background: var(--s1); padding: clamp(26px, 4vw, 44px); border-radius: 2px; }
+    @media (max-width: 860px) {
+      .fsplit { flex-direction: column; }
+      .fsplit-img { position: relative; height: clamp(220px, 48vw, 360px); flex: none; }
+      .fsplit-img-veil { background: linear-gradient(to bottom, transparent 40%, var(--bk) 100%); }
+      .fsplit-form { width: 100%; padding: 44px clamp(20px, 6vw, 48px); }
+    }
+    .flabel { display: block; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.42); margin-bottom: 10px; }
+    .finput {
+      width: 100%;
+      background: rgba(255,255,255,.06);
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 2px;
+      padding: 15px 18px;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--w);
+      transition: border-color .18s ease;
+      -webkit-appearance: none;
+      margin-bottom: 4px;
+    }
+    .finput::placeholder { color: rgba(255,255,255,.18); }
+    .finput:focus { outline: none; border-color: var(--honey); }
+    .finput[aria-invalid="true"] { border-color: #c0392b; }
+    .ferr { font-size: 11px; font-weight: 400; color: #e05444; margin-top: 6px; display: none; }
+    .ferr.on { display: block; }
+    .field { margin-bottom: 20px; }
+    .crow {
+      display: flex; gap: 13px; align-items: flex-start;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255,255,255,.09);
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      margin-bottom: 6px;
+    }
+    .crow input[type="checkbox"] { width: 17px; height: 17px; flex-shrink: 0; margin-top: 3px; accent-color: var(--honey); cursor: pointer; }
+    .crow label { font-size: 13px; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,.42); cursor: pointer; }
+    .crow label a { color: var(--honey); text-underline-offset: 3px; }
+    .crow label a:focus-visible { outline: 2px solid var(--honey); border-radius: 1px; }
+    .cerr { font-size: 11px; color: #e05444; margin-bottom: 18px; display: none; }
+    .cerr.on { display: block; }
+    .fsubmit { width: 100%; padding: 17px; font-size: 10.5px; letter-spacing: .2em; }
+    .flegal { margin-top: 15px; font-size: 11px; font-weight: 400; line-height: 1.64; color: rgba(255,255,255,.24); }
+    .fsuccess { display: none; text-align: center; padding: 10px 0; }
+    .fsuccess.on { display: block; }
+    .ffields.hide { display: none; }
+    .smark {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(224,171,67,.14);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 26px;
+    }
+    .smark svg { width: 21px; height: 21px; color: var(--honey); }
+    .fsuccess h3 { font-size: clamp(24px, 3vw, 38px); font-weight: 800; color: var(--w); margin-bottom: 14px; line-height: 1.08; letter-spacing: -.015em; }
+    .fsuccess p { font-size: 14px; font-weight: 400; line-height: 1.7; color: rgba(255,255,255,.52); text-wrap: pretty; }
+    .fsuccess p + p { margin-top: 10px; font-size: 11.5px; color: rgba(255,255,255,.28); }
+
+    /* ─── CLOSING ─── */
+    .closing {
+      position: relative;
+      text-align: center;
+      padding: clamp(100px, 16vw, 188px) 0;
+      overflow: hidden;
+    }
+    .cl-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: brightness(.28) saturate(.55);
+    }
+    .cl-veil {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,.44) 0%, rgba(8,8,8,.15) 50%, rgba(8,8,8,.55) 100%);
+      pointer-events: none;
+    }
+    .cl-body { position: relative; }
+    .cl-h2 {
+      text-transform: uppercase;
+      font-size: clamp(26px, 4.2vw, 60px);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -.016em;
+      text-wrap: balance;
+      max-width: 680px;
+      margin: 0 auto 22px;
+    }
+    .cl-p { font-size: 16px; font-weight: 400; line-height: 1.7; color: var(--dim); max-width: 360px; margin: 0 auto 48px; text-wrap: pretty; }
+
+    /* ─── FOOTER ─── */
+    .foot {
+      background: var(--s1);
+      border-top: 1px solid var(--line);
+      padding: 40px var(--g);
+      display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center;
+    }
+    .foot-logo { height: 28px; width: auto; opacity: .55; }
+    .foot a { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); text-decoration: none; transition: color .18s ease; }
+    .foot a:hover { color: var(--dim); }
+    .foot a:focus-visible { outline: 2px solid var(--honey); border-radius: 1px; }
+    .foot-copy { font-size: 11px; font-weight: 400; color: rgba(255,255,255,.22); letter-spacing: .06em; }
+
+    /* ─── REVEAL ─── */
+    .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .rv.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="topbar" id="js-topbar" role="banner">
+    <img src="img/Logo.svg" alt="THERAT" class="topbar-logo" width="72" height="28">
+    <button class="btn btn-w js-cta" data-loc="header">Acceder al recetario</button>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-h1">
+      <img
+        src="img/Gemini_Generated_Image_klgi5sklgi5sklgi.jpeg"
+        alt="Las tres botellas de THERAT: Honey, Caliu y Orange sobre fondo oscuro con condensación"
+        class="hero-bg"
+        loading="eager"
+        fetchpriority="high"
+      >
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="hero-body wrap">
+        <p class="lbl rv">Recetario digital gratuito</p>
+        <h1 id="hero-h1" class="hero-h1 rv" style="transition-delay:.07s">
+          No es una ratafía<br>
+          Son tres formas de brindar distinto
+        </h1>
+        <p class="hero-sub rv" style="transition-delay:.14s">
+          Descubre tres recetas muy fáciles para convertir Honey, Orange y Caliu en el mejor plan de la noche. Sin técnicas imposibles. Sin una barra llena de botellas. Solo buenos ingredientes, hielo y ganas de abrir algo distinto.
+        </p>
+        <div class="hero-ctas rv" style="transition-delay:.2s">
+          <button class="btn btn-w js-cta" data-loc="hero">Acceder al recetario</button>
+          <p class="hero-micro">Te lo enviamos directamente a tu email.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="benefits" aria-labelledby="ben-h2">
+      <div class="wrap benefits-grid">
+        <div class="benefits-left">
+          <p class="lbl rv">Para abrir cuando el plan pide algo más</p>
+          <h2 id="ben-h2" class="benefits-h2 rv" style="transition-delay:.07s">Tres botellas<br>Tres momentos<br>Cero complicaciones</h2>
+          <p class="benefits-p rv" style="transition-delay:.12s">No necesitas saber de coctelería ni llenar la cocina de ingredientes imposibles. Este recetario está pensado para que abras una botella, prepares algo que apetece de verdad y conviertas cualquier sobremesa, aperitivo o noche en casa en un brindis con historia.</p>
+          <button class="btn btn-ol js-cta rv" data-loc="benefits" style="transition-delay:.17s">Quiero las 3 recetas</button>
+        </div>
+        <ul class="btrio" role="list">
+          <li class="btcard rv">
+            <div class="btcard-img-wrap">
+              <img src="img/Honey01.jpg" alt="THERAT Honey" class="btcard-img" loading="lazy">
+              <div class="btcard-veil" aria-hidden="true"></div>
+            </div>
+            <div class="btcard-body">
+              <p class="btbadge" style="--c:var(--honey)">Honey</p>
+              <p class="btcard-name">Una receta por botella</p>
+              <p class="btcard-desc">Para descubrir Honey, Orange y Caliu desde el primer sorbo.</p>
+            </div>
+          </li>
+          <li class="btcard rv" style="transition-delay:.09s">
+            <div class="btcard-img-wrap">
+              <img src="img/Orange01.jpg" alt="THERAT Orange" class="btcard-img" loading="lazy">
+              <div class="btcard-veil" aria-hidden="true"></div>
+            </div>
+            <div class="btcard-body">
+              <p class="btbadge" style="--c:var(--orange)">Orange</p>
+              <p class="btcard-name">Ingredientes fáciles de encontrar</p>
+              <p class="btcard-desc">Nada que no puedas resolver antes de que lleguen tus invitados.</p>
+            </div>
+          </li>
+          <li class="btcard rv" style="transition-delay:.18s">
+            <div class="btcard-img-wrap">
+              <img src="img/Caliu01.jpg" alt="THERAT Caliu" class="btcard-img" loading="lazy">
+              <div class="btcard-veil" aria-hidden="true"></div>
+            </div>
+            <div class="btcard-body">
+              <p class="btbadge" style="--c:var(--caliu)">Caliu</p>
+              <p class="btcard-name">Pasos claros y rápidos</p>
+              <p class="btcard-desc">Más tiempo para brindar. Menos tiempo mirando instrucciones.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RECIPES -->
+    <section class="recipes" aria-labelledby="rec-h2">
+      <div class="wrap">
+        <header class="recipes-head">
+          <p class="lbl rv">Dentro del recetario</p>
+          <h2 id="rec-h2" class="recipes-h2 rv" style="transition-delay:.07s">Una receta para cada forma de alargar el momento</h2>
+          <p class="recipes-intro rv" style="transition-delay:.13s">No te contamos toda la receta aquí. Te dejamos una pista de lo que puedes preparar cuando abras cada botella.</p>
+        </header>
+      </div>
+      <div class="rgrid" role="list">
+        <article class="rcard rv" role="listitem">
+          <img src="img/Passion Honey.jpg" alt="Cóctel de THERAT Honey" class="rcard-img" loading="lazy">
+          <div class="rcard-veil" aria-hidden="true"></div>
+          <div class="rcard-body">
+            <span class="rbadge rbadge-honey">THERAT Honey</span>
+            <h3>El trago que baja las revoluciones</h3>
+            <p class="rcard-txt">Una mezcla cálida, suave y con el punto justo de miel para cuando el día se alarga y no queremos que la conversación termine todavía.</p>
+            <p class="rcard-ft">Para compartir sin mirar el reloj.</p>
+          </div>
+        </article>
+        <article class="rcard rv" style="transition-delay:.1s" role="listitem">
+          <img src="img/Orange Soul.jpg" alt="Cóctel de THERAT Orange" class="rcard-img" loading="lazy">
+          <div class="rcard-veil" aria-hidden="true"></div>
+          <div class="rcard-body">
+            <span class="rbadge rbadge-orange">THERAT Orange</span>
+            <h3>El aperitivo que cambia el plan</h3>
+            <p class="rcard-txt">Fresca, cítrica y luminosa. Una receta para empezar la tarde con una copa que hace que un "tomamos algo" se convierta en algo más.</p>
+            <p class="rcard-ft">Para abrir la noche con ganas.</p>
+          </div>
+        </article>
+        <article class="rcard rv" style="transition-delay:.2s" role="listitem">
+          <img src="img/Caliu up.jpeg" alt="Cóctel de THERAT Caliu" class="rcard-img" loading="lazy">
+          <div class="rcard-veil" aria-hidden="true"></div>
+          <div class="rcard-body">
+            <span class="rbadge rbadge-caliu">THERAT Caliu</span>
+            <h3>El cierre que pide sobremesa</h3>
+            <p class="rcard-txt">Especias, avellana tostada y ese punto goloso que recuerda a horno encendido. Una receta para servir despacio y quedarse un rato más.</p>
+            <p class="rcard-ft">Para cuando fuera hace frío y dentro se está bien.</p>
+          </div>
+        </article>
+      </div>
+      <div class="recipes-foot rv">
+        <button class="btn btn-w js-cta" data-loc="recipes">Acceder al recetario</button>
+      </div>
+    </section>
+
+    <!-- INTERLUDE -->
+    <div class="interlude" aria-hidden="true">
+      <img src="img/GUEST_N3_CocktailBar_26 004.jpg" alt="" class="interlude-img" loading="lazy">
+      <div class="interlude-veil"></div>
+    </div>
+
+    <!-- PRODUCT VALUE -->
+    <section class="pv" aria-labelledby="pv-h2">
+      <div class="wrap pv-grid">
+        <div class="pv-img rv">
+          <img src="img/Home todos.jpg" alt="Las tres botellas de THERAT" loading="lazy">
+        </div>
+        <div class="pv-text">
+          <p class="lbl rv">Una botella con algo que decir</p>
+          <h2 id="pv-h2" class="pv-h2 rv" style="transition-delay:.07s">La tradición no tiene por qué saber a lo de siempre</h2>
+          <p class="pv-p rv" style="transition-delay:.12s">THERAT parte de una ratafía catalana elaborada con nueces verdes y la lleva a otro lugar: más fino, más actual y pensado para disfrutarlo solo, con hielo o mezclado. Honey suma miel natural. Orange aporta un toque de triple sec. Caliu juega con las especias y la avellana tostada.</p>
+          <blockquote class="callout rv" style="transition-delay:.18s">Tres maneras de descubrir una botella que no se queda en la estantería</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="fsec" id="form-section" aria-labelledby="f-h2">
+      <div class="fsplit">
+        <div class="fsplit-img" aria-hidden="true">
+          <img src="img/Anillo de fuego.jpeg" alt="" loading="lazy">
+          <div class="fsplit-img-veil"></div>
+        </div>
+        <div class="fsplit-form">
+          <p class="lbl rv">Tu próximo brindis empieza aquí</p>
+          <h2 id="f-h2" class="fc-h2 rv" style="transition-delay:.07s">Recibe las tres recetas en tu email</h2>
+          <p class="fc-p rv" style="transition-delay:.13s">Déjanos tu email y te enviamos el recetario digital para que tengas una idea distinta lista para el próximo plan.</p>
+          <div class="fbox rv" style="transition-delay:.18s" role="region" aria-label="Formulario de registro">
+            <div class="ffields" id="js-ffields">
+              <form id="js-form" novalidate>
+                <div class="field">
+                  <label class="flabel" for="js-em">Tu email</label>
+                  <input class="finput" type="email" id="js-em" name="email"
+                    placeholder="tu@email.com" autocomplete="email" inputmode="email"
+                    required aria-required="true" aria-describedby="js-em-err">
+                  <p class="ferr" id="js-em-err" role="alert" aria-live="polite">Escribe un email válido para enviarte el recetario.</p>
+                </div>
+                <div class="crow">
+                  <input type="checkbox" id="js-cons" name="consent" required aria-required="true" aria-describedby="js-cons-err">
+                  <label for="js-cons">He leído y acepto la <a href="#" id="js-priv" target="_blank" rel="noopener noreferrer">política de privacidad</a>.</label>
+                </div>
+                <p class="cerr" id="js-cons-err" role="alert" aria-live="polite">Debes aceptar la política de privacidad para continuar.</p>
+                <button type="submit" class="btn btn-w fsubmit" id="js-sub">Acceder al recetario</button>
+                <p class="flegal">Usaremos tu email para enviarte el recetario y comunicaciones de THERAT. Puedes darte de baja cuando quieras.</p>
+              </form>
+            </div>
+            <div class="fsuccess" id="js-fsuc" tabindex="-1" aria-live="polite" aria-atomic="true">
+              <div class="smark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3>Ya casi está</h3>
+              <p>Revisa tu email: te hemos enviado el acceso a <em>Tres formas de brindar distinto</em>.</p>
+              <p>Si no lo ves en unos minutos, revisa la carpeta de promociones o correo no deseado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="closing" aria-labelledby="cl-h2">
+      <img src="img/BITE.jpg" alt="Cóctel THERAT sobre mesa oscura" class="cl-bg" loading="lazy">
+      <div class="cl-veil" aria-hidden="true"></div>
+      <div class="wrap cl-body">
+        <h2 id="cl-h2" class="cl-h2 rv">Hay botellas para guardar<br>Y botellas para abrir cuando algo merece un brindis</h2>
+        <p class="cl-p rv" style="transition-delay:.1s">Empieza por tres recetas. Lo demás puede surgir cuando suene el hielo.</p>
+        <div class="rv" style="transition-delay:.18s">
+          <button class="btn btn-w js-cta" data-loc="closing">Acceder al recetario</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="foot" role="contentinfo">
+    <img src="img/Logo.svg" alt="THERAT" class="foot-logo" width="72" height="28">
+    <nav aria-label="Pie de página"><a href="#" id="js-fpriv">Privacidad</a></nav>
+    <p class="foot-copy" id="js-fcopy"></p>
+  </footer>
+
+  <script>
+    /* ════ CONFIG — editar antes de conectar en producción ════ */
+    const CFG = {
+      FORM_ENDPOINT: '',   /* TODO: URL endpoint email marketing (MailerLite, Brevo, etc.) POST {email} → {ok:true} */
+      PRIVACY_URL:   '',   /* TODO: URL política de privacidad THERAT */
+      PDF_URL:       '',   /* TODO: URL o lógica de entrega del recetario PDF */
+      DEMO_MODE:     true, /* cambiar a false cuando FORM_ENDPOINT esté conectado */
+    };
+
+    /* ════ ANALYTICS (no-op si no hay proveedor) ════ */
+    function track(ev, d) {
+      try {
+        if (typeof window.gtag      === 'function') window.gtag('event', ev, d);
+        if (typeof window.plausible === 'function') window.plausible(ev, { props: d });
+      } catch (_) {}
+    }
+
+    /* ════ MOTION ════ */
+    const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ════ TOPBAR ════ */
+    const topbar = document.getElementById('js-topbar');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('on', window.scrollY > 56);
+    }, { passive: true });
+
+    /* ════ SCROLL TO FORM ════ */
+    function scrollToForm(loc) {
+      document.getElementById('form-section').scrollIntoView({ behavior: motionOK ? 'smooth' : 'auto' });
+      setTimeout(() => { const em = document.getElementById('js-em'); if (em) em.focus(); }, motionOK ? 680 : 0);
+      track('lead_magnet_cta_clicked', { location: loc });
+    }
+    document.querySelectorAll('.js-cta').forEach(b =>
+      b.addEventListener('click', () => scrollToForm(b.dataset.loc || 'unknown'))
+    );
+
+    /* ════ PRIVACY LINKS ════ */
+    const privUrl = CFG.PRIVACY_URL || '#';
+    ['js-priv','js-fpriv'].forEach(id => { const el = document.getElementById(id); if (el) el.href = privUrl; });
+
+    /* ════ COPYRIGHT ════ */
+    const fc = document.getElementById('js-fcopy');
+    if (fc) fc.textContent = '© ' + new Date().getFullYear() + ' THERAT. Todos los derechos reservados.';
+
+    /* ════ FORM ════ */
+    const form    = document.getElementById('js-form');
+    const emEl    = document.getElementById('js-em');
+    const emErr   = document.getElementById('js-em-err');
+    const consEl  = document.getElementById('js-cons');
+    const consErr = document.getElementById('js-cons-err');
+    const subBtn  = document.getElementById('js-sub');
+    const ffields = document.getElementById('js-ffields');
+    const fsuc    = document.getElementById('js-fsuc');
+    const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setEmErr(on) { emErr.classList.toggle('on',on); emEl.setAttribute('aria-invalid', on?'true':'false'); }
+    function setConsErr(on) { consErr.classList.toggle('on',on); }
+
+    emEl.addEventListener('input', () => { if (reEmail.test(emEl.value.trim())) setEmErr(false); });
+    emEl.addEventListener('focus', () => { track('lead_magnet_form_started', {}); }, { once: true });
+
+    form && form.addEventListener('submit', async e => {
+      e.preventDefault();
+      let ok = true;
+      if (!reEmail.test(emEl.value.trim())) { setEmErr(true); ok = false; } else { setEmErr(false); }
+      if (!consEl.checked)                   { setConsErr(true); ok = false; } else { setConsErr(false); }
+      if (!ok) return;
+      track('lead_magnet_form_submitted', {});
+      subBtn.textContent = 'Enviando tu recetario…';
+      subBtn.disabled = true;
+      if (CFG.DEMO_MODE || !CFG.FORM_ENDPOINT) {
+        await new Promise(r => setTimeout(r, 1300));
+        showSuccess();
+      } else {
+        try {
+          const res = await fetch(CFG.FORM_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emEl.value.trim() }),
+          });
+          if (!res.ok) throw new Error();
+          showSuccess();
+        } catch (_) {
+          subBtn.textContent = 'Acceder al recetario';
+          subBtn.disabled = false;
+          alert('Algo no ha ido bien. Por favor, inténtalo de nuevo.');
+        }
+      }
+    });
+
+    function showSuccess() {
+      track('lead_magnet_form_success', {});
+      ffields.classList.add('hide');
+      fsuc.classList.add('on');
+      fsuc.focus();
+    }
+
+    /* ════ SCROLL REVEAL ════ */
+    if (motionOK && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { threshold: .08, rootMargin: '0px 0px -28px 0px' });
+      document.querySelectorAll('.rv').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+    }
+  </script>
+</body>
+</html>
