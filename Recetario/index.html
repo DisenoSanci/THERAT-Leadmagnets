@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THERAT — Recetario</title>
+  <meta name="description" content="Tres recetas exclusivas de THERAT: Espresso, Mosco Mulé y Doble Sour.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #0A0A0A;
+      --card:   #141414;
+      --surf:   #1D1D1D;
+      --text:   #F5F5F5;
+      --body:   #B5B5B5;
+      --label:  #8C8C8C;
+      --muted:  #6A6A6A;
+      --line:   #2E2E2E;
+      --orange: #FF7937;
+      --honey:  #E0AB43;
+      --caliu:  #C4722A;
+      --font:   'Montserrat', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+    button { background: none; border: none; cursor: pointer; font-family: var(--font); color: inherit; -webkit-tap-highlight-color: transparent; }
+    img { display: block; }
+
+    #app { position: fixed; inset: 0; overflow: hidden; }
+    .screen { display: none; width: 100%; height: 100%; }
+    .screen.active { display: block; }
+
+    /* ══ HOME ══ */
+    #home { overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
+
+    .home-head {
+      padding: 56px 24px 28px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .home-logo { height: 36px; width: auto; margin-bottom: 22px; display: block; }
+    .home-title {
+      font-size: clamp(38px, 10.5vw, 56px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1; text-transform: uppercase;
+    }
+    .home-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+
+    .cards { padding: 12px 16px 80px; display: flex; flex-direction: column; gap: 10px; }
+
+    .card {
+      position: relative; overflow: hidden; border-radius: 10px;
+      height: clamp(220px, 34vw, 290px);
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
+      background: var(--surf);
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .card:active { transform: scale(0.985); opacity: 0.9; }
+    .card-photo {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      filter: brightness(0.42) saturate(0.6);
+      transition: transform 0.35s ease;
+    }
+    .card:active .card-photo { transform: scale(1.025); }
+    .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 14%, transparent 62%);
+      padding: 22px;
+      display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+    }
+    .card-chip { margin-bottom: 9px; }
+    .card-name {
+      font-size: clamp(26px, 7.5vw, 36px); font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.95;
+    }
+
+    /* ══ CHIP ══ */
+    .chip {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 100px;
+    }
+    .chip.orange { color: var(--orange); border: 1px solid rgba(255,121,55,0.55); background: rgba(255,121,55,0.1); }
+    .chip.honey  { color: var(--honey);  border: 1px solid rgba(224,171,67,0.55); background: rgba(224,171,67,0.1); }
+    .chip.dual   { color: var(--text);   border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
+
+    /* ══ DETAIL ══ */
+    #detail { height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg); }
+
+    .hero-img {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100vh;
+      object-fit: cover; filter: brightness(0.48) saturate(0.65);
+      z-index: 0; pointer-events: none;
+    }
+    .hero-grad {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+      background: linear-gradient(to top, rgba(20,20,20,0.97) 0%, rgba(12,12,12,0.45) 35%, rgba(0,0,0,0.1) 65%, transparent 82%);
+      z-index: 1; pointer-events: none;
+    }
+
+    .back {
+      position: fixed; top: 0; left: 0;
+      width: 100%; padding: 48px 24px 24px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.62) 38%, transparent);
+      display: flex; align-items: center; gap: 10px;
+      z-index: 30; cursor: pointer;
+    }
+    .back-arrow { font-size: 18px; color: rgba(255,255,255,0.48); }
+    .back-label { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+
+    .hero-text {
+      position: fixed;
+      bottom: max(calc(44vh + 16px), calc(100vh - 488px + 16px));
+      left: 0; width: 100%; padding: 0 28px;
+      z-index: 5; pointer-events: none;
+    }
+    .hero-chip { margin-bottom: 11px; }
+    .hero-name {
+      font-size: clamp(36px, 10.5vw, 52px); font-weight: 800;
+      text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.94;
+    }
+
+    .hero-spacer { height: 56vh; max-height: 488px; flex-shrink: 0; position: relative; z-index: 2; }
+
+    .recipe-card {
+      position: relative; z-index: 10;
+      background: var(--card); border-radius: 24px 24px 0 0;
+      min-height: 100vh; padding-bottom: 96px;
+      box-shadow: 0 -32px 64px rgba(0,0,0,0.6);
+    }
+    .rc-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--line); margin: 14px auto 0; }
+    .rc-header { padding: 24px 24px 20px; border-bottom: 1px solid var(--line); }
+    .rc-desc { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.76; text-wrap: pretty; }
+
+    /* Stats */
+    .stats {
+      display: flex; margin: 24px 24px 0;
+      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    }
+    .stat { flex: 1; padding: 14px 12px; text-align: center; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: none; }
+    .stat-val { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .stat-key { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    .section { padding: 32px 24px 0; }
+    .sec-label {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--label); margin-bottom: 22px; white-space: nowrap;
+    }
+    .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    /* Flavor pills */
+    .fpills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .fpill {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--line); border-radius: 100px; color: var(--label);
+    }
+
+    /* Ingredients */
+    .prop-list { border-top: 1px solid var(--line); }
+    .prop-row { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .prop-row:last-child { border-bottom: none; }
+    .prop-img {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--surf); border: 1px solid var(--line);
+      overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .prop-img img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85); }
+    .prop-fallback { font-size: 13px; font-weight: 800; color: var(--muted); }
+    .prop-amt { font-size: 16px; font-weight: 700; color: var(--text); min-width: 62px; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+    .prop-ing { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.4; }
+
+    /* Steps */
+    .steps-list { border-top: 1px solid var(--line); }
+    .step { display: grid; grid-template-columns: 32px 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: none; }
+    .step-n {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--text); color: var(--bg);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .step-txt { font-size: 15px; font-weight: 400; color: var(--body); line-height: 1.72; text-wrap: pretty; }
+
+    /* Warning */
+    .raw-egg-warn {
+      margin: 28px 24px 0;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.65;
+    }
+    .raw-egg-warn strong { color: var(--label); font-weight: 600; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME -->
+  <div id="home" class="screen active">
+    <header class="home-head">
+      <img src="Imagens/Logo.svg" alt="THERAT" class="home-logo">
+      <h1 class="home-title">Recetario</h1>
+      <p class="home-sub">Tres recetas · Tres momentos</p>
+    </header>
+    <div class="cards" id="js-cards"></div>
+  </div>
+
+  <!-- DETAIL -->
+  <div id="detail" class="screen">
+    <img class="hero-img" id="d-img" src="" alt="">
+    <div class="hero-grad"></div>
+    <button class="back" id="js-back" aria-label="Volver al recetario">
+      <span class="back-arrow">←</span>
+      <span class="back-label">Recetario</span>
+    </button>
+    <div class="hero-text">
+      <div class="hero-chip" id="d-chip"></div>
+      <h2 class="hero-name" id="d-name"></h2>
+    </div>
+    <div class="hero-spacer"></div>
+    <div class="recipe-card">
+      <div class="rc-handle"></div>
+      <div class="rc-header">
+        <p class="rc-desc" id="d-desc"></p>
+      </div>
+      <div class="stats" id="d-stats"></div>
+      <div class="section">
+        <p class="sec-label">Perfil de sabor</p>
+        <div class="fpills" id="d-flavors"></div>
+      </div>
+      <div class="section">
+        <p class="sec-label">Ingredientes</p>
+        <div class="prop-list" id="d-ingredients"></div>
+      </div>
+      <div class="section">
+        <p class="sec-label">Elaboración</p>
+        <div class="steps-list" id="d-steps"></div>
+      </div>
+      <div class="raw-egg-warn" id="d-egg-warn" style="display:none">
+        <strong>Aviso</strong> — Esta receta contiene clara de huevo crudo. Puede sustituirse por clara pasteurizada.
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+  /* ── RECETAS ── */
+  const COCKTAILS = [
+    {
+      id: 'espresso',
+      name: 'Espresso',
+      variant: 'honey',
+      variantLabel: 'THERAT Honey',
+      description: 'Café, miel y un punto de Kahlúa. Un trago para cerrar la noche sin cerrar la conversación.',
+      time: '2 min',
+      glass: 'Copa cóctel',
+      img: 'Imagens/Honey01.jpg',
+      flavors: ['Café', 'Caramelo', 'Intenso', 'Goloso'],
+      rawEgg: false,
+      ingredients: [
+        { amt: '5 cl',  name: 'Ratafia Honey THERAT', img: 'Imagens/Honey01.jpg' },
+        { amt: '3 cl',  name: 'Licor de café Kahlúa', img: null },
+        { amt: '2 cl',  name: 'Caramelo salado Polot', img: null },
+        { amt: '1 u',   name: 'Espresso', img: null },
+      ],
+      steps: [
+        'Prepara el espresso y deja que se enfríe unos minutos.',
+        'Pon todos los ingredientes en la coctelera con hielo.',
+        'Shake fuerte durante 15 segundos.',
+        'Doble colado en copa de cóctel.',
+      ]
+    },
+    {
+      id: 'mosco-mule',
+      name: 'Mosco Mulé',
+      variant: 'orange',
+      variantLabel: 'THERAT Orange',
+      description: 'Cítrico, fresco y con el toque de jengibre justo. La versión THERAT del Moscow Mule.',
+      time: '3 min',
+      glass: 'Vaso largo',
+      img: 'Imagens/Orange01.jpg',
+      flavors: ['Cítrico', 'Refrescante', 'Lima', 'Jengibre'],
+      rawEgg: false,
+      ingredients: [
+        { amt: '5 cl', name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
+        { amt: '3 cl', name: 'Lima natural', img: null },
+        { amt: '2 cl', name: 'Azúcar líquido', img: null },
+        { amt: 'c/n',  name: 'Menta (en el shake)', img: null },
+        { amt: '—',    name: 'Ginger beer (para terminar)', img: null },
+      ],
+      steps: [
+        'Pon la ratafia, la lima, el azúcar y unas hojas de menta en la coctelera con hielo.',
+        'Shake fuerte.',
+        'Doble colado en vaso largo con hielo nuevo.',
+        'Termina con ginger beer al gusto.',
+      ]
+    },
+    {
+      id: 'doble-sour',
+      name: 'Doble Sour',
+      variant: 'dual',
+      variantLabel: 'Honey + Orange',
+      description: 'Miel y naranja sobre un lecho de lima y clara de huevo. El sour que lo tiene todo.',
+      time: '4 min',
+      glass: 'Copa coupe',
+      img: 'Imagens/BITE.jpg',
+      flavors: ['Ácido', 'Sedoso', 'Floral', 'Equilibrado'],
+      rawEgg: true,
+      ingredients: [
+        { amt: '3 cl',   name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
+        { amt: '3 cl',   name: 'Ratafia Honey THERAT',  img: 'Imagens/Honey01.jpg' },
+        { amt: '3 cl',   name: 'Lima natural', img: null },
+        { amt: '2 cl',   name: 'Azúcar líquido', img: null },
+        { amt: '1,5 cl', name: 'Clara de huevo', img: null },
+      ],
+      steps: [
+        'Dry shake: todos los ingredientes en la coctelera sin hielo. Agita 15 segundos para montar la clara.',
+        'Añade hielo y vuelve a hacer shake fuerte.',
+        'Doble colado en copa coupe.',
+      ]
+    }
+  ];
+
+  /* ── RENDER HOME ── */
+  const cardsEl = document.getElementById('js-cards');
+  COCKTAILS.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-label', 'Ver receta: ' + c.name);
+    el.innerHTML = `
+      <img src="${c.img}" alt="${c.name}" class="card-photo" loading="${i === 0 ? 'eager' : 'lazy'}">
+      <div class="card-overlay">
+        <div class="card-chip"><span class="chip ${c.variant}">${c.variantLabel}</span></div>
+        <p class="card-name">${c.name}</p>
+      </div>`;
+    el.addEventListener('click', () => openDetail(c));
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(c); } });
+    cardsEl.appendChild(el);
+  });
+
+  /* ── OPEN DETAIL ── */
+  function openDetail(c) {
+    document.getElementById('d-img').src = c.img;
+    document.getElementById('d-img').alt = c.name;
+    document.getElementById('d-chip').innerHTML = `<span class="chip ${c.variant}">${c.variantLabel}</span>`;
+    document.getElementById('d-name').textContent = c.name.toUpperCase();
+    document.getElementById('d-desc').textContent = c.description;
+
+    document.getElementById('d-stats').innerHTML = `
+      <div class="stat"><p class="stat-val">${c.time}</p><p class="stat-key">Tiempo</p></div>
+      <div class="stat"><p class="stat-val">${c.glass}</p><p class="stat-key">Copa</p></div>
+      <div class="stat"><p class="stat-val">${c.ingredients.length}</p><p class="stat-key">Ingredientes</p></div>`;
+
+    document.getElementById('d-flavors').innerHTML =
+      c.flavors.map(f => `<span class="fpill">${f}</span>`).join('');
+
+    document.getElementById('d-ingredients').innerHTML =
+      c.ingredients.map(ing => {
+        const inner = ing.img
+          ? `<img src="${ing.img}" alt="" loading="lazy">`
+          : `<span class="prop-fallback">${ing.name.charAt(0).toUpperCase()}</span>`;
+        return `<div class="prop-row">
+          <div class="prop-img">${inner}</div>
+          <span class="prop-amt">${ing.amt}</span>
+          <span class="prop-ing">${ing.name}</span>
+        </div>`;
+      }).join('');
+
+    document.getElementById('d-steps').innerHTML =
+      c.steps.map((s, i) =>
+        `<div class="step"><div class="step-n">${i + 1}</div><p class="step-txt">${s}</p></div>`
+      ).join('');
+
+    const warn = document.getElementById('d-egg-warn');
+    warn.style.display = c.rawEgg ? 'block' : 'none';
+
+    document.getElementById('home').classList.remove('active');
+    const det = document.getElementById('detail');
+    det.classList.add('active');
+    det.scrollTop = 0;
+  }
+
+  /* ── BACK ── */
+  document.getElementById('js-back').addEventListener('click', () => {
+    document.getElementById('detail').classList.remove('active');
+    document.getElementById('home').classList.add('active');
+  });
+</script>
+</body>
+</html>
