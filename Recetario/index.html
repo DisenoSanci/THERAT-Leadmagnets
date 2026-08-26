@@ -287,14 +287,15 @@
 </div>
 <script>
   /* ── IMÁGENES DE INGREDIENTES ── */
-  const U = 'https://images.unsplash.com/photo-';
   const IMG = {
-    cafe:    U+'1461023058943-07fcbe16d735?w=200&h=200&fit=crop&q=80',
-    sirope:  U+'1587135991058-8816b028691f?w=200&h=200&fit=crop&q=80',
-    limon:   'https://images.unsplash.com/photo-1590502593747-42a996133562?q=80&w=200&h=200&fit=crop',
-    menta:   'https://thumbs.dreamstime.com/b/menta-fresca-en-una-tabla-52376962.jpg',
-    ginger:  'https://images.unsplash.com/photo-1775638409001-3a90d37a2dd4?q=80&w=200&h=200&fit=crop',
-    huevo:   'https://plus.unsplash.com/premium_photo-1668771715526-1fdb452c7ee7?w=200&h=200&fit=crop&q=60',
+    lima:     'https://imgs.search.brave.com/znRUppCj67GxycEsp9DgS2vnSly5ffieyEpV5TW2F5o/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5nZXR0eWltYWdlcy5jb20vaWQvMTA2NDkxNzMyL2VzL2ZvdG8vbGltJUMzJUIzbi5qcGc_cz02MTJ4NjEyJnc9MCZrPTIwJmM9V3ZfV0tBOVZudWpHa2xpNHFXamlRR2pvdTlQaFhZY1djTDhCdEtyT2hmdz0',
+    azucar:   'https://imgs.search.brave.com/65oMibwZQg3Puu_3vf9tYaUwrGnjm4U4hAwDmZDaxpE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4wLnVuY29tby5jb20vZXMvcG9zdHMvNi8yLzEvY29tb19oYWNlcl9jYXJhbWVsb19saXF1aWRvX3Npbl9henVjYXJfNTExMjZfcGFzb180XzYwMC5qcGc',
+    kahlua:   'https://imgs.search.brave.com/jovQTDTI9GgSFQ8Ih_w45_oj6Kay0CwSmqVQORpp1c4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90b3N0LmNsL2Nkbi9zaG9wL3Byb2R1Y3RzL0xpY29yLWRlLUNhZmUtS2FobHVhLTc1MGNjLnBuZz92PTE3Mzg3NDQ5OTEmd2lkdGg9MTIxNA',
+    polot:    'https://imgs.search.brave.com/t0J8zhE9gvU52FvZbalvQG45YKJzP9-6pwZNoPY8ePA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9qb3JkaWFuYWxpLmNvbS9jZG4vc2hvcC9hcnRpY2xlcy9tdWVzdHJhaW1nXzMuanBnP3Y9MTY4MzI0OTQzMSZ3aWR0aD0zODQw',
+    espresso: 'https://imgs.search.brave.com/Jj5M6WgA275rLVfxWMBzD-Y1ZYBzXvatuUSgANJMQsw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wZXJmZWN0ZGFpbHlncmluZC5jb20vZXMvd3AtY29udGVudC91cGxvYWRzL3NpdGVzLzIvMjAxOC8wMi9DcmVtYS1kZWwtZXNwcmVzc28uanBn',
+    menta:    'https://thumbs.dreamstime.com/b/menta-fresca-en-una-tabla-52376962.jpg',
+    ginger:   'https://images.unsplash.com/photo-1775638409001-3a90d37a2dd4?q=80&w=200&h=200&fit=crop',
+    huevo:    'https://plus.unsplash.com/premium_photo-1668771715526-1fdb452c7ee7?w=200&h=200&fit=crop&q=60',
   };
 
   /* ── RECETAS ── */
@@ -312,9 +313,9 @@
       rawEgg: false,
       ingredients: [
         { amt: '5 cl',  name: 'Ratafia Honey THERAT', img: 'Imagens/Honey01.jpg' },
-        { amt: '3 cl',  name: 'Licor de café Kahlúa', img: IMG.cafe },
-        { amt: '2 cl',  name: 'Caramelo salado Polot', img: IMG.sirope },
-        { amt: '1 u',   name: 'Espresso', img: IMG.cafe },
+        { amt: '3 cl',  name: 'Licor de café Kahlúa', img: IMG.kahlua },
+        { amt: '2 cl',  name: 'Caramelo salado Polot', img: IMG.polot },
+        { amt: '1 u',   name: 'Espresso',              img: IMG.espresso },
       ],
       steps: [
         'Prepara el espresso y deja que se enfríe unos minutos.',
@@ -336,8 +337,8 @@
       rawEgg: false,
       ingredients: [
         { amt: '5 cl', name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
-        { amt: '3 cl', name: 'Lima natural',           img: IMG.limon },
-        { amt: '2 cl', name: 'Azúcar líquido',         img: IMG.sirope },
+        { amt: '3 cl', name: 'Lima natural',           img: IMG.lima },
+        { amt: '2 cl', name: 'Azúcar líquido',         img: IMG.azucar },
         { amt: 'c/n',  name: 'Menta (en el shake)',    img: IMG.menta },
         { amt: '—',    name: 'Ginger beer',            img: IMG.ginger },
       ],
@@ -370,8 +371,8 @@
       ingredients: [
         { amt: '3 cl',   name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
         { amt: '3 cl',   name: 'Ratafia Honey THERAT',  img: 'Imagens/Honey01.jpg' },
-        { amt: '3 cl',   name: 'Lima natural',           img: IMG.limon },
-        { amt: '2 cl',   name: 'Azúcar líquido',         img: IMG.sirope },
+        { amt: '3 cl',   name: 'Lima natural',           img: IMG.lima },
+        { amt: '2 cl',   name: 'Azúcar líquido',         img: IMG.azucar },
         { amt: '1,5 cl', name: 'Clara de huevo',         img: IMG.huevo },
       ],
       steps: [
