@@ -201,6 +201,32 @@
       font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.65;
     }
     .raw-egg-warn strong { color: var(--label); font-weight: 600; }
+
+    /* Tip de barra */
+    .bar-tip {
+      margin: 28px 24px 0;
+      padding: 18px 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surf);
+    }
+    .bar-tip-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .bar-tip-title {
+      font-size: 13px; font-weight: 700; color: var(--text);
+      margin-bottom: 12px; letter-spacing: -0.01em;
+    }
+    .bar-tip-steps { display: flex; flex-direction: column; gap: 7px; }
+    .bar-tip-step {
+      display: flex; gap: 10px; align-items: baseline;
+      font-size: 13px; font-weight: 400; color: var(--body); line-height: 1.55;
+    }
+    .bar-tip-step-n {
+      font-size: 10px; font-weight: 700; color: var(--muted);
+      flex-shrink: 0; width: 14px; text-align: right;
+    }
   </style>
 </head>
 <body>
@@ -246,6 +272,11 @@
       <div class="section">
         <p class="sec-label">Elaboración</p>
         <div class="steps-list" id="d-steps"></div>
+      </div>
+      <div class="bar-tip" id="d-tip" style="display:none">
+        <p class="bar-tip-label">Básico de barra</p>
+        <p class="bar-tip-title" id="d-tip-title"></p>
+        <div class="bar-tip-steps" id="d-tip-steps"></div>
       </div>
       <div class="raw-egg-warn" id="d-egg-warn" style="display:none">
         <strong>Aviso</strong> — Esta receta contiene clara de huevo crudo. Puede sustituirse por clara pasteurizada.
@@ -315,7 +346,15 @@
         'Shake fuerte.',
         'Doble colado en vaso largo con hielo nuevo.',
         'Termina con ginger beer al gusto.',
-      ]
+      ],
+      tip: {
+        title: 'Almíbar casero (1:1)',
+        steps: [
+          'Mezcla partes iguales de azúcar y agua fría en un cazo.',
+          'Calienta a fuego medio removiendo hasta que el azúcar se disuelva. No hace falta que hierva.',
+          'Deja enfriar y guarda en un bote de cristal. Aguanta 2 semanas en nevera.',
+        ]
+      }
     },
     {
       id: 'doble-sour',
@@ -339,7 +378,15 @@
         'Dry shake: todos los ingredientes en la coctelera sin hielo. Agita 15 segundos para montar la clara.',
         'Añade hielo y vuelve a hacer shake fuerte.',
         'Doble colado en copa coupe.',
-      ]
+      ],
+      tip: {
+        title: 'Almíbar casero (1:1)',
+        steps: [
+          'Mezcla partes iguales de azúcar y agua fría en un cazo.',
+          'Calienta a fuego medio removiendo hasta que el azúcar se disuelva. No hace falta que hierva.',
+          'Deja enfriar y guarda en un bote de cristal. Aguanta 2 semanas en nevera.',
+        ]
+      }
     }
   ];
 
@@ -394,6 +441,18 @@
       c.steps.map((s, i) =>
         `<div class="step"><div class="step-n">${i + 1}</div><p class="step-txt">${s}</p></div>`
       ).join('');
+
+    // Tip de almíbar
+    const tipEl = document.getElementById('d-tip');
+    if (c.tip) {
+      document.getElementById('d-tip-title').textContent = c.tip.title;
+      document.getElementById('d-tip-steps').innerHTML = c.tip.steps
+        .map((s, i) => `<div class="bar-tip-step"><span class="bar-tip-step-n">${i+1}.</span><span>${s}</span></div>`)
+        .join('');
+      tipEl.style.display = 'block';
+    } else {
+      tipEl.style.display = 'none';
+    }
 
     const warn = document.getElementById('d-egg-warn');
     warn.style.display = c.rawEgg ? 'block' : 'none';
