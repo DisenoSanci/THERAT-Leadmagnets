@@ -224,6 +224,33 @@
     .raw-egg-warn { margin: 24px 32px 0; padding: 14px 16px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.03); font-size: 12px; font-weight: 400; color: var(--muted); line-height: 1.65; }
     .raw-egg-warn strong { color: var(--label); font-weight: 600; }
 
+    /* ── BUY BAR ── */
+    #buy-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      padding: 12px 20px 40px;
+      background: linear-gradient(to top, rgba(10,10,10,1) 55%, transparent);
+      z-index: 100; display: none;
+    }
+    #buy-bar.visible { display: flex; gap: 10px; justify-content: center; }
+    @media (min-width: 1024px) {
+      #buy-bar { left: auto; right: 48px; bottom: 48px; width: auto; padding: 0; background: none; }
+      #buy-bar.visible { display: flex; flex-direction: row; gap: 10px; }
+    }
+    .buy-btn-link {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 9px;
+      padding: 16px 24px; border-radius: 100px;
+      font-family: var(--font); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; cursor: pointer;
+      transition: opacity 0.15s; -webkit-tap-highlight-color: transparent;
+      backdrop-filter: blur(6px);
+    }
+    .buy-btn-link:active { opacity: 0.7; }
+    .buy-btn-link.orange { color: var(--orange); border: 1px solid rgba(255,121,55,0.5); background: rgba(255,121,55,0.13); }
+    .buy-btn-link.honey  { color: var(--honey);  border: 1px solid rgba(224,171,67,0.5); background: rgba(224,171,67,0.13); }
+    @media (min-width: 1024px) {
+      .buy-btn-link { flex: none; padding: 16px 32px; box-shadow: 0 8px 40px rgba(0,0,0,0.55); }
+    }
+
     /* Mobile padding override for recipe card internals */
     @media (max-width: 1023px) {
       .rc-header { padding: 24px 24px 20px; }
@@ -321,8 +348,21 @@
     </div>
   </div>
 
+  <div id="buy-bar"></div>
+
 </div>
 <script>
+  /* ── BUY ── */
+  const BUY_URLS = {
+    orange: 'https://theratafia.es/tienda/therat-orange/',
+    honey:  'https://theratafia.es/tienda/therat-honey/',
+  };
+  const BUY_LABELS = {
+    orange: 'Comprar Orange',
+    honey:  'Comprar Honey',
+  };
+  const CART_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
+
   /* ── IMÁGENES DE INGREDIENTES ── */
   const U = 'https://images.unsplash.com/photo-';
   const IMG = {
@@ -523,12 +563,21 @@
 
     document.getElementById('home').classList.remove('active');
     document.getElementById('detail').classList.add('active');
+
+    // Buy bar
+    const bar = document.getElementById('buy-bar');
+    const variants = c.variant === 'dual' ? ['orange', 'honey'] : [c.variant];
+    bar.innerHTML = variants.map(v =>
+      `<a class="buy-btn-link ${v}" href="${BUY_URLS[v]}" target="_blank" rel="noopener">${CART_SVG} ${BUY_LABELS[v]}</a>`
+    ).join('');
+    bar.classList.add('visible');
   }
 
   /* ── BACK ── */
   function goHome() {
     document.getElementById('detail').classList.remove('active');
     document.getElementById('home').classList.add('active');
+    document.getElementById('buy-bar').classList.remove('visible');
     if (window.innerWidth >= 1024) window.scrollTo(0, 0);
   }
   document.getElementById('js-back').addEventListener('click', goHome);
