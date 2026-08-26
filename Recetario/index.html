@@ -79,6 +79,8 @@
 
       /* Desktop-only elements hidden on mobile */
       .dt-left, #dt-home-hero { display: none !important; }
+      /* Home header is mobile-only */
+      .home-head { display: block; }
     }
 
     /* ════════════════════════════
@@ -94,6 +96,7 @@
 
       /* HOME desktop */
       #home { background: var(--bg); min-height: 100vh; }
+      .home-head { display: none; }
 
       #dt-home-hero {
         position: relative; height: 56vh; min-height: 440px;
