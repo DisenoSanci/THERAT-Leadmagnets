@@ -567,17 +567,24 @@
         </div>
         <div class="fsplit-form">
           <p class="lbl rv">Tu próximo brindis empieza aquí</p>
-          <h2 id="f-h2" class="fc-h2 rv" style="transition-delay:.07s">Recibe las tres recetas en tu email</h2>
-          <p class="fc-p rv" style="transition-delay:.13s">Déjanos tu email y te enviamos el recetario digital para que tengas una idea distinta lista para el próximo plan.</p>
+          <h2 id="f-h2" class="fc-h2 rv" style="transition-delay:.07s">Accede al recetario gratis</h2>
+          <p class="fc-p rv" style="transition-delay:.13s">Déjanos tu nombre y email. Accederás al recetario directamente — sin esperar ningún correo.</p>
           <div class="fbox rv" style="transition-delay:.18s" role="region" aria-label="Formulario de registro">
             <div class="ffields" id="js-ffields">
               <form id="js-form" novalidate>
+                <div class="field">
+                  <label class="flabel" for="js-name">Tu nombre</label>
+                  <input class="finput" type="text" id="js-name" name="name"
+                    placeholder="Tu nombre" autocomplete="given-name"
+                    required aria-required="true" aria-describedby="js-name-err">
+                  <p class="ferr" id="js-name-err" role="alert" aria-live="polite">Escribe tu nombre para continuar.</p>
+                </div>
                 <div class="field">
                   <label class="flabel" for="js-em">Tu email</label>
                   <input class="finput" type="email" id="js-em" name="email"
                     placeholder="tu@email.com" autocomplete="email" inputmode="email"
                     required aria-required="true" aria-describedby="js-em-err">
-                  <p class="ferr" id="js-em-err" role="alert" aria-live="polite">Escribe un email válido para enviarte el recetario.</p>
+                  <p class="ferr" id="js-em-err" role="alert" aria-live="polite">Escribe un email válido para continuar.</p>
                 </div>
                 <div class="crow">
                   <input type="checkbox" id="js-cons" name="consent" required aria-required="true" aria-describedby="js-cons-err">
@@ -585,16 +592,16 @@
                 </div>
                 <p class="cerr" id="js-cons-err" role="alert" aria-live="polite">Debes aceptar la política de privacidad para continuar.</p>
                 <button type="submit" class="btn btn-w fsubmit" id="js-sub">Acceder al recetario</button>
-                <p class="flegal">Usaremos tu email para enviarte el recetario y comunicaciones de THERAT. Puedes darte de baja cuando quieras.</p>
+                <p class="flegal">Tus datos se usarán para darte acceso al recetario y para comunicaciones de THERAT. Puedes darte de baja cuando quieras.</p>
               </form>
             </div>
             <div class="fsuccess" id="js-fsuc" tabindex="-1" aria-live="polite" aria-atomic="true">
               <div class="smark" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
-              <h3>Ya casi está</h3>
-              <p>Revisa tu email: te hemos enviado el acceso a <em>Tres formas de brindar distinto</em>.</p>
-              <p>Si no lo ves en unos minutos, revisa la carpeta de promociones o correo no deseado.</p>
+              <h3>Ya tienes acceso</h3>
+              <p>El recetario está listo. Ábrelo ahora y prepara tu primera receta.</p>
+              <a class="btn btn-w fsubmit" href="https://therat-leadmagnets.pages.dev/Recetario/" target="_blank" rel="noopener" style="margin-top:24px;display:flex;text-decoration:none">Abrir el recetario</a>
             </div>
           </div>
         </div>
@@ -626,9 +633,9 @@
   <script>
     /* ════ CONFIG — editar antes de conectar en producción ════ */
     const CFG = {
-      FORM_ENDPOINT: '',   /* TODO: URL endpoint email marketing (MailerLite, Brevo, etc.) POST {email} → {ok:true} */
+      FORM_ENDPOINT: '',   /* TODO: Cloudflare Worker URL → POST {name, email} a MailerLite y devuelve {ok:true} */
       PRIVACY_URL:   '',   /* TODO: URL política de privacidad THERAT */
-      PDF_URL:       '',   /* TODO: URL o lógica de entrega del recetario PDF */
+      RECETARIO_URL: 'https://therat-leadmagnets.pages.dev/Recetario/',
       DEMO_MODE:     true, /* cambiar a false cuando FORM_ENDPOINT esté conectado */
     };
 
@@ -668,40 +675,45 @@
     if (fc) fc.textContent = '© ' + new Date().getFullYear() + ' THERAT. Todos los derechos reservados.';
 
     /* ════ FORM ════ */
-    const form    = document.getElementById('js-form');
-    const emEl    = document.getElementById('js-em');
-    const emErr   = document.getElementById('js-em-err');
-    const consEl  = document.getElementById('js-cons');
-    const consErr = document.getElementById('js-cons-err');
-    const subBtn  = document.getElementById('js-sub');
-    const ffields = document.getElementById('js-ffields');
-    const fsuc    = document.getElementById('js-fsuc');
-    const reEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const form     = document.getElementById('js-form');
+    const nameEl   = document.getElementById('js-name');
+    const nameErr  = document.getElementById('js-name-err');
+    const emEl     = document.getElementById('js-em');
+    const emErr    = document.getElementById('js-em-err');
+    const consEl   = document.getElementById('js-cons');
+    const consErr  = document.getElementById('js-cons-err');
+    const subBtn   = document.getElementById('js-sub');
+    const ffields  = document.getElementById('js-ffields');
+    const fsuc     = document.getElementById('js-fsuc');
+    const reEmail  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    function setEmErr(on) { emErr.classList.toggle('on',on); emEl.setAttribute('aria-invalid', on?'true':'false'); }
+    function setNameErr(on) { nameErr.classList.toggle('on',on); nameEl.setAttribute('aria-invalid', on?'true':'false'); }
+    function setEmErr(on)   { emErr.classList.toggle('on',on);   emEl.setAttribute('aria-invalid', on?'true':'false'); }
     function setConsErr(on) { consErr.classList.toggle('on',on); }
 
-    emEl.addEventListener('input', () => { if (reEmail.test(emEl.value.trim())) setEmErr(false); });
-    emEl.addEventListener('focus', () => { track('lead_magnet_form_started', {}); }, { once: true });
+    nameEl.addEventListener('input', () => { if (nameEl.value.trim().length > 0) setNameErr(false); });
+    emEl.addEventListener('input',   () => { if (reEmail.test(emEl.value.trim())) setEmErr(false); });
+    emEl.addEventListener('focus',   () => { track('lead_magnet_form_started', {}); }, { once: true });
 
     form && form.addEventListener('submit', async e => {
       e.preventDefault();
       let ok = true;
-      if (!reEmail.test(emEl.value.trim())) { setEmErr(true); ok = false; } else { setEmErr(false); }
+      if (!nameEl.value.trim())              { setNameErr(true); ok = false; } else { setNameErr(false); }
+      if (!reEmail.test(emEl.value.trim()))  { setEmErr(true);   ok = false; } else { setEmErr(false); }
       if (!consEl.checked)                   { setConsErr(true); ok = false; } else { setConsErr(false); }
       if (!ok) return;
       track('lead_magnet_form_submitted', {});
-      subBtn.textContent = 'Enviando tu recetario…';
+      subBtn.textContent = 'Abriendo el recetario…';
       subBtn.disabled = true;
       if (CFG.DEMO_MODE || !CFG.FORM_ENDPOINT) {
-        await new Promise(r => setTimeout(r, 1300));
+        await new Promise(r => setTimeout(r, 900));
         showSuccess();
       } else {
         try {
           const res = await fetch(CFG.FORM_ENDPOINT, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: emEl.value.trim() }),
+            body: JSON.stringify({ name: nameEl.value.trim(), email: emEl.value.trim() }),
           });
           if (!res.ok) throw new Error();
           showSuccess();
