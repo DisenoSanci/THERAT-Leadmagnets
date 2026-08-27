@@ -109,7 +109,8 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
     }
     .hero-bg {
@@ -118,45 +119,50 @@
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center center;
-      filter: brightness(.7);
+      filter: brightness(.48) saturate(.7);
     }
     .hero-veil {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(8,8,8,.08) 0%,
-        rgba(8,8,8,.32) 45%,
-        rgba(8,8,8,.92) 82%,
-        rgba(8,8,8,1)   100%
-      );
+      background: radial-gradient(ellipse at center, rgba(8,8,8,.1) 0%, rgba(8,8,8,.72) 100%);
       pointer-events: none;
     }
     .hero-body {
       position: relative;
-      padding: 0 var(--g) clamp(56px, 9vw, 112px);
-      max-width: min(900px, 100%);
+      text-align: center;
+      padding: clamp(100px, 14vw, 160px) var(--g) clamp(80px, 11vw, 130px);
+      max-width: 900px;
+      width: 100%;
+      margin-inline: auto;
     }
-    .hero-body .lbl { display: block; margin-bottom: 24px; }
+    .hero-body .lbl { display: block; margin-bottom: 28px; }
+    .hero-ante {
+      font-size: clamp(16px, 2vw, 26px);
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 10px;
+    }
     .hero-h1 {
-      font-size: clamp(34px, 5.2vw, 68px);
-      font-weight: 800;
-      line-height: .97;
-      letter-spacing: -.02em;
+      font-size: clamp(68px, 14vw, 180px);
+      font-weight: 900;
+      line-height: .88;
+      letter-spacing: -.04em;
       text-transform: uppercase;
       text-wrap: balance;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
     .hero-sub {
       font-size: clamp(15px, 1.5vw, 18px);
       font-weight: 400;
       line-height: 1.72;
       color: var(--dim);
-      max-width: 520px;
-      margin-bottom: 44px;
+      max-width: 480px;
+      margin: 0 auto 44px;
       text-wrap: pretty;
     }
-    .hero-ctas { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+    .hero-ctas { display: flex; flex-direction: column; align-items: center; gap: 14px; }
     .hero-micro { font-size: 11px; color: var(--muted); letter-spacing: .04em; }
 
     /* ─── BENEFITS ─── */
@@ -189,34 +195,10 @@
       text-wrap: pretty;
       margin-bottom: 44px;
     }
-    /* Bottle trio */
-    .btrio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; list-style: none; }
-    .btcard { position: relative; overflow: hidden; }
-    .btcard-img-wrap { aspect-ratio: 2/3; overflow: hidden; position: relative; }
-    .btcard-img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      filter: brightness(.62) saturate(.75);
-      transition: transform .65s ease, filter .65s ease;
-    }
-    .btcard:hover .btcard-img { transform: scale(1.06); filter: brightness(.82) saturate(.95); }
-    .btcard-veil {
-      position: absolute; inset: 0;
-      background: linear-gradient(to bottom, transparent 32%, rgba(8,8,8,.96) 100%);
-      pointer-events: none;
-    }
-    .btcard-body { position: absolute; bottom: 0; left: 0; right: 0; padding: clamp(12px, 1.6vw, 20px); }
-    .btbadge {
-      display: inline-block;
-      font-size: 9px; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--c, var(--honey));
-      border-bottom: 1.5px solid var(--c, var(--honey));
-      padding-bottom: 5px; margin-bottom: 9px;
-    }
-    .btcard-name { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--w); margin-bottom: 5px; }
-    .btcard-desc { font-size: 11px; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,.54); text-wrap: pretty; }
+    /* Benefits image */
+    .ben-img { overflow: hidden; aspect-ratio: 2/3; }
+    .ben-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: brightness(.84); transition: transform .75s ease; }
+    .ben-img:hover img { transform: scale(1.03); }
 
     /* Interlude */
     .interlude { position: relative; height: clamp(220px, 30vw, 420px); overflow: hidden; }
@@ -492,14 +474,13 @@
       >
       <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-body wrap">
-        <h1 id="hero-h1" class="hero-h1 rv">
-          No es una ratafía<br>
-          Son tres formas de brindar distinto
-        </h1>
-        <p class="hero-sub rv" style="transition-delay:.14s">
-          Descubre tres recetas muy fáciles para convertir Honey, Orange y Caliu en el mejor plan de la noche. Sin técnicas imposibles. Sin una barra llena de botellas. Solo buenos ingredientes, hielo y ganas de abrir algo distinto.
+        <p class="lbl rv">Ratafía Catalana · Honey · Orange · Caliu</p>
+        <p class="hero-ante rv" style="transition-delay:.06s">No es una ratafía.</p>
+        <h1 id="hero-h1" class="hero-h1 rv" style="transition-delay:.1s">Son tres.</h1>
+        <p class="hero-sub rv" style="transition-delay:.17s">
+          Tres botellas, tres recetas, tres formas de convertir cualquier noche en algo que se recuerda.
         </p>
-        <div class="hero-ctas rv" style="transition-delay:.2s">
+        <div class="hero-ctas rv" style="transition-delay:.24s">
           <button class="btn btn-w js-cta" data-loc="hero">Acceder al recetario</button>
         </div>
       </div>
@@ -514,41 +495,9 @@
           <p class="benefits-p rv" style="transition-delay:.12s">No necesitas saber de coctelería ni llenar la cocina de ingredientes imposibles. Este recetario está pensado para que abras una botella, prepares algo que apetece de verdad y conviertas cualquier sobremesa, aperitivo o noche en casa en un brindis con historia.</p>
           <button class="btn btn-ol js-cta rv" data-loc="benefits" style="transition-delay:.17s">Quiero las 3 recetas</button>
         </div>
-        <ul class="btrio" role="list">
-          <li class="btcard rv">
-            <div class="btcard-img-wrap">
-              <img src="img/Honey01.jpg" alt="THERAT Honey" class="btcard-img" loading="lazy">
-              <div class="btcard-veil" aria-hidden="true"></div>
-            </div>
-            <div class="btcard-body">
-              <p class="btbadge" style="--c:var(--honey)">Honey</p>
-              <p class="btcard-name">Una receta por botella</p>
-              <p class="btcard-desc">Para descubrir Honey, Orange y Caliu desde el primer sorbo.</p>
-            </div>
-          </li>
-          <li class="btcard rv" style="transition-delay:.09s">
-            <div class="btcard-img-wrap">
-              <img src="img/Orange01.jpg" alt="THERAT Orange" class="btcard-img" loading="lazy">
-              <div class="btcard-veil" aria-hidden="true"></div>
-            </div>
-            <div class="btcard-body">
-              <p class="btbadge" style="--c:var(--orange)">Orange</p>
-              <p class="btcard-name">Ingredientes fáciles de encontrar</p>
-              <p class="btcard-desc">Nada que no puedas resolver antes de que lleguen tus invitados.</p>
-            </div>
-          </li>
-          <li class="btcard rv" style="transition-delay:.18s">
-            <div class="btcard-img-wrap">
-              <img src="img/Caliu01.jpg" alt="THERAT Caliu" class="btcard-img" loading="lazy">
-              <div class="btcard-veil" aria-hidden="true"></div>
-            </div>
-            <div class="btcard-body">
-              <p class="btbadge" style="--c:var(--caliu)">Caliu</p>
-              <p class="btcard-name">Pasos claros y rápidos</p>
-              <p class="btcard-desc">Más tiempo para brindar. Menos tiempo mirando instrucciones.</p>
-            </div>
-          </li>
-        </ul>
+        <div class="ben-img rv" style="transition-delay:.1s">
+          <img src="img/Home todos.jpg" alt="Las tres botellas de THERAT: Honey, Orange y Caliu" loading="lazy">
+        </div>
       </div>
     </section>
 
@@ -563,33 +512,33 @@
       </div>
       <div class="rgrid" role="list">
         <article class="rcard rv" role="listitem">
-          <img src="img/Passion Honey.jpg" alt="Cóctel de THERAT Honey" class="rcard-img" loading="lazy">
+          <img src="img/Passion Honey.jpg" alt="Espresso THERAT — cóctel de café con Honey" class="rcard-img" loading="lazy">
           <div class="rcard-veil" aria-hidden="true"></div>
           <div class="rcard-body">
             <span class="rbadge rbadge-honey">THERAT Honey</span>
-            <h3>El trago que baja las revoluciones</h3>
-            <p class="rcard-txt">Una mezcla cálida, suave y con el punto justo de miel para cuando el día se alarga y no queremos que la conversación termine todavía.</p>
-            <p class="rcard-ft">Para compartir sin mirar el reloj.</p>
+            <h3>Espresso</h3>
+            <p class="rcard-txt">Honey, Kahlúa y espresso. La sobremesa que empieza cuando los demás piden la cuenta. Intenso, goloso y con el punto de caramelo&nbsp;salado.</p>
+            <p class="rcard-ft">Para alargar la noche sin que nadie se quiera ir.</p>
           </div>
         </article>
         <article class="rcard rv" style="transition-delay:.1s" role="listitem">
-          <img src="img/Orange Soul.jpg" alt="Cóctel de THERAT Orange" class="rcard-img" loading="lazy">
+          <img src="img/RATJITO.JPG" alt="Mosco Mulé THERAT — cóctel fresco con Orange" class="rcard-img" loading="lazy">
           <div class="rcard-veil" aria-hidden="true"></div>
           <div class="rcard-body">
             <span class="rbadge rbadge-orange">THERAT Orange</span>
-            <h3>El aperitivo que cambia el plan</h3>
-            <p class="rcard-txt">Fresca, cítrica y luminosa. Una receta para empezar la tarde con una copa que hace que un "tomamos algo" se convierta en algo más.</p>
-            <p class="rcard-ft">Para abrir la noche con ganas.</p>
+            <h3>Mosco Mulé</h3>
+            <p class="rcard-txt">Orange, lima, azúcar y ginger beer. El cítrico que abre el apetito y activa la conversación desde el primer&nbsp;sorbo.</p>
+            <p class="rcard-ft">Para cuando el plan empieza en verde y acaba de noche.</p>
           </div>
         </article>
         <article class="rcard rv" style="transition-delay:.2s" role="listitem">
-          <img src="img/Caliu up.jpeg" alt="Cóctel de THERAT Caliu" class="rcard-img" loading="lazy">
+          <img src="img/BITE.jpg" alt="Doble Sour THERAT — cóctel sofisticado con Honey y Orange" class="rcard-img" loading="lazy">
           <div class="rcard-veil" aria-hidden="true"></div>
           <div class="rcard-body">
-            <span class="rbadge rbadge-caliu">THERAT Caliu</span>
-            <h3>El cierre que pide sobremesa</h3>
-            <p class="rcard-txt">Especias, avellana tostada y ese punto goloso que recuerda a horno encendido. Una receta para servir despacio y quedarse un rato más.</p>
-            <p class="rcard-ft">Para cuando fuera hace frío y dentro se está bien.</p>
+            <span class="rbadge rbadge-honey" style="background:linear-gradient(90deg,rgba(224,171,67,.9) 0%,rgba(255,121,55,.9) 100%);color:#000">Honey + Orange</span>
+            <h3>Doble Sour</h3>
+            <p class="rcard-txt">Las dos Ratafia juntas, lima, y clara de huevo. Sedoso, ácido y con ese acabado en espuma que solo consiguen los que saben lo que&nbsp;hacen.</p>
+            <p class="rcard-ft">Para la noche que merece algo más que un vino.</p>
           </div>
         </article>
       </div>
