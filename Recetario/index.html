@@ -81,7 +81,7 @@
       /* Desktop-only elements hidden on mobile */
       .dt-left, #dt-home-hero { display: none !important; }
       /* Home header is mobile-only */
-      .home-head { display: block; }
+      .home-head { display: flex; }
     }
 
     /* ════════════════════════════
@@ -368,16 +368,15 @@
   const CART_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
 
   /* ── IMÁGENES DE INGREDIENTES ── */
-  const U = 'https://images.unsplash.com/photo-';
   const IMG = {
     lima:     'Imagens/lima.jpg',
-    azucar:   U+'1558618666-fcd25c85cd64?q=80&w=200&h=200&fit=crop',
+    azucar:   'Imagens/azucar.jpg',
     kahlua:   'Imagens/kahlua.png',
     polot:    'Imagens/polot.jpg',
     espresso: 'Imagens/espresso.jpg',
-    menta:    U+'1628556234393-a932693e712c?q=80&w=200&h=200&fit=crop',
-    ginger:   U+'1542990978-c5e3f5d4c78e?q=80&w=200&h=200&fit=crop',
-    huevo:    'https://plus.unsplash.com/premium_photo-1668771715526-1fdb452c7ee7?w=200&h=200&fit=crop&q=60',
+    menta:    'Imagens/menta.jpg',
+    ginger:   'Imagens/ginger.jpg',
+    huevo:    'Imagens/huevo.jpg',
   };
 
   /* ── RECETAS ── */
