@@ -631,13 +631,40 @@
   </footer>
 
   <script>
-    /* ════ CONFIG — editar antes de conectar en producción ════ */
+    /* ════ CONFIG ════ */
     const CFG = {
-      FORM_ENDPOINT: '',   /* TODO: Cloudflare Worker URL → POST {name, email} a MailerLite y devuelve {ok:true} */
-      PRIVACY_URL:   '',   /* TODO: URL política de privacidad THERAT */
+      PRIVACY_URL:   '',
       RECETARIO_URL: 'https://therat-leadmagnets.pages.dev/Recetario/',
-      DEMO_MODE:     true, /* cambiar a false cuando FORM_ENDPOINT esté conectado */
     };
+
+    /* ════ MAILCHIMP JSONP ════ */
+    function submitMailchimp(name, email, onSuccess, onError) {
+      const cbName = 'mc_cb_' + Date.now();
+      const base   = 'https://theratafia.us22.list-manage.com/subscribe/post-json';
+      const params = '?u=a21ad17261f5110cf7119b630&id=d38e45f173&f_id=00ece7e1f0'
+        + '&FNAME='  + encodeURIComponent(name)
+        + '&EMAIL='  + encodeURIComponent(email)
+        + '&b_a21ad17261f5110cf7119b630_d38e45f173='  /* honeypot vacío */
+        + '&c='      + cbName;
+
+      const script = document.createElement('script');
+      const timer  = setTimeout(() => { cleanup(); onError('Tiempo de espera agotado. Inténtalo de nuevo.'); }, 8000);
+
+      function cleanup() { clearTimeout(timer); delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); }
+
+      window[cbName] = function(data) {
+        cleanup();
+        if (data.result === 'success') onSuccess();
+        else {
+          /* Mailchimp devuelve HTML en msg — lo limpiamos */
+          const msg = (data.msg || '').replace(/<[^>]+>/g, '').trim();
+          onError(msg || 'Algo no ha ido bien. Inténtalo de nuevo.');
+        }
+      };
+
+      script.src = base + params;
+      document.head.appendChild(script);
+    }
 
     /* ════ ANALYTICS (no-op si no hay proveedor) ════ */
     function track(ev, d) {
@@ -695,34 +722,32 @@
     emEl.addEventListener('input',   () => { if (reEmail.test(emEl.value.trim())) setEmErr(false); });
     emEl.addEventListener('focus',   () => { track('lead_magnet_form_started', {}); }, { once: true });
 
-    form && form.addEventListener('submit', async e => {
+    form && form.addEventListener('submit', function(e) {
       e.preventDefault();
       let ok = true;
-      if (!nameEl.value.trim())              { setNameErr(true); ok = false; } else { setNameErr(false); }
-      if (!reEmail.test(emEl.value.trim()))  { setEmErr(true);   ok = false; } else { setEmErr(false); }
-      if (!consEl.checked)                   { setConsErr(true); ok = false; } else { setConsErr(false); }
+      if (!nameEl.value.trim())             { setNameErr(true); ok = false; } else { setNameErr(false); }
+      if (!reEmail.test(emEl.value.trim())) { setEmErr(true);   ok = false; } else { setEmErr(false); }
+      if (!consEl.checked)                  { setConsErr(true); ok = false; } else { setConsErr(false); }
       if (!ok) return;
       track('lead_magnet_form_submitted', {});
       subBtn.textContent = 'Abriendo el recetario…';
       subBtn.disabled = true;
-      if (CFG.DEMO_MODE || !CFG.FORM_ENDPOINT) {
-        await new Promise(r => setTimeout(r, 900));
-        showSuccess();
-      } else {
-        try {
-          const res = await fetch(CFG.FORM_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: nameEl.value.trim(), email: emEl.value.trim() }),
-          });
-          if (!res.ok) throw new Error();
-          showSuccess();
-        } catch (_) {
+      submitMailchimp(
+        nameEl.value.trim(),
+        emEl.value.trim(),
+        function() { showSuccess(); },
+        function(msg) {
           subBtn.textContent = 'Acceder al recetario';
           subBtn.disabled = false;
-          alert('Algo no ha ido bien. Por favor, inténtalo de nuevo.');
+          /* Si ya está suscrito lo tratamos como éxito — ya está en la lista */
+          if (msg.toLowerCase().includes('already') || msg.toLowerCase().includes('suscrit')) {
+            showSuccess();
+          } else {
+            setEmErr(true);
+            emErr.textContent = msg;
+          }
         }
-      }
+      );
     });
 
     function showSuccess() {
