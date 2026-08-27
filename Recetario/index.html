@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THERAT — Recetario</title>
-  <meta name="description" content="Tres recetas exclusivas de THERAT: Espresso, Mosco Mulé y Doble Sour.">
+  <meta name="description" content="Tres recetas exclusivas de THERAT: Espresso, Mosco Mulé y Caliu Up.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -41,6 +41,7 @@
     }
     .chip.orange { color: var(--orange); border: 1px solid rgba(255,121,55,0.55); background: rgba(255,121,55,0.1); }
     .chip.honey  { color: var(--honey);  border: 1px solid rgba(224,171,67,0.55); background: rgba(224,171,67,0.1); }
+    .chip.caliu  { color: var(--caliu);  border: 1px solid rgba(196,114,42,0.55); background: rgba(196,114,42,0.1); }
     .chip.dual   { color: var(--text);   border: 1px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.06); }
 
     /* ════════════════════════════
@@ -247,6 +248,7 @@
     .buy-btn-link:active { opacity: 0.7; }
     .buy-btn-link.orange { color: var(--orange); border: 1px solid rgba(255,121,55,0.5); background: rgba(255,121,55,0.13); }
     .buy-btn-link.honey  { color: var(--honey);  border: 1px solid rgba(224,171,67,0.5); background: rgba(224,171,67,0.13); }
+    .buy-btn-link.caliu  { color: var(--caliu);  border: 1px solid rgba(196,114,42,0.5); background: rgba(196,114,42,0.13); }
     @media (min-width: 1024px) {
       .buy-btn-link { flex: none; padding: 16px 32px; box-shadow: 0 8px 40px rgba(0,0,0,0.55); }
     }
@@ -356,10 +358,12 @@
   const BUY_URLS = {
     orange: 'https://theratafia.es/tienda/therat-orange/',
     honey:  'https://theratafia.es/tienda/therat-honey/',
+    caliu:  'https://theratafia.es/tienda/therat-caliu/',
   };
   const BUY_LABELS = {
     orange: 'Comprar Orange',
     honey:  'Comprar Honey',
+    caliu:  'Comprar Caliu',
   };
   const CART_SVG = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`;
 
@@ -436,36 +440,28 @@
       }
     },
     {
-      id: 'doble-sour',
-      name: 'Doble Sour',
-      variant: 'dual',
-      variantLabel: 'Honey + Orange',
-      description: 'Miel y naranja sobre un lecho de lima y clara de huevo. El sour que lo tiene todo.',
-      time: '4 min',
-      glass: 'Copa coupe',
-      img: 'Imagens/BITE.jpg',
-      flavors: ['Ácido', 'Sedoso', 'Floral', 'Equilibrado'],
-      rawEgg: true,
+      id: 'caliu-up',
+      name: 'Caliu Up',
+      variant: 'caliu',
+      variantLabel: 'THERAT Caliu',
+      description: 'Caliu, lima y Seven Up. El highball tropical con el carácter especiado de la ratafía y toda la frescura del cítrico.',
+      time: '2 min',
+      glass: 'Vaso highball',
+      img: 'Imagens/Caliu up.jpeg',
+      flavors: ['Tropical', 'Cítrico', 'Fresco', 'Especiado'],
+      rawEgg: false,
       ingredients: [
-        { amt: '3 cl',   name: 'Ratafia Orange THERAT', img: 'Imagens/Orange01.jpg' },
-        { amt: '3 cl',   name: 'Ratafia Honey THERAT',  img: 'Imagens/Honey01.jpg' },
-        { amt: '3 cl',   name: 'Lima natural',           img: IMG.lima },
-        { amt: '2 cl',   name: 'Azúcar líquido',         img: IMG.azucar },
-        { amt: '1,5 cl', name: 'Clara de huevo',         img: IMG.huevo },
+        { amt: '6 cl', name: 'Ratafia Caliu THERAT', img: 'Imagens/Caliu01.jpg' },
+        { amt: '3 cl', name: 'Zumo de lima',          img: IMG.lima },
+        { amt: 'c/n',  name: 'Menta fresca',          img: IMG.menta },
+        { amt: '—',    name: 'Seven Up',              img: null },
       ],
       steps: [
-        'Dry shake: todos los ingredientes en la coctelera sin hielo. Agita 15 segundos para montar la clara.',
-        'Añade hielo y vuelve a hacer shake fuerte.',
-        'Doble colado en copa coupe.',
-      ],
-      tip: {
-        title: 'Caramelo líquido casero',
-        steps: [
-          'Pon azúcar en un cazo a fuego medio sin remover hasta que empiece a tomar color ámbar.',
-          'Añade agua caliente poco a poco con cuidado — puede salpicar. Remueve hasta disolver.',
-          'Deja enfriar y guarda en un bote de cristal. Aguanta 2 semanas en nevera.',
-        ]
-      }
+        'Pon la Ratafia Caliu y el zumo de lima en el vaso highball con hielo.',
+        'Stir suave — remueve para integrar sin perder la carbonatación.',
+        'Añade el Seven Up al final hasta llenar el vaso.',
+        'Garnish de menta fresca.',
+      ]
     }
   ];
 
